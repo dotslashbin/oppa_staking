@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import Image from 'next/image'
 
 // Sections 
 import HarvestForm from '../sections/harvest'
@@ -24,8 +23,8 @@ export default function Home() {
       <main className={styles.main}>
         <WalletIndicator />
         <Stake />
-        {/* <Summary /> */}
-        {/* <HarvestForm /> */}
+        <Summary />
+        <HarvestForm />
       </main>
  
       <Footer />

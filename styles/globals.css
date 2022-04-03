@@ -667,8 +667,6 @@ button:focus {
 	right: -5px;
 	top: -5px;
 	z-index:-1;
-}
-.btn span::after {
 	animation-delay: 0.8s
 }
 .btn.btn-lg {
@@ -1424,6 +1422,8 @@ header a:hover,
 }
 .tk_counter_inner .progress-bar {
 	padding-right: 12px;
+	background: #fff;
+    font-weight: 600;
 }
 .tk_counter_inner .progress {
 	background-color: transparent;
@@ -1433,10 +1433,6 @@ header a:hover,
 	margin-top: 50px;
 	overflow: visible;
 	position: relative;
-}
-.tk_counter_inner .progress-bar {
-	background: #fff;
-    font-weight: 600;
 }
 .token_box .progress-bar-success {
 	background-color: #05B5FF;
@@ -2993,9 +2989,6 @@ header a:hover,
 	top: -45px;
 	width: 20px;
 }
-.rd_complete .roadmap_icon {
-	background-color: #ff67cb;
-}
 .roadmap_icon::before {
 	border: 3px solid #ffffff;
 	border-radius: 100%;
@@ -3008,6 +3001,7 @@ header a:hover,
 	top: 0;
 }
 .rd_complete .roadmap_icon {
+	background-color: #ff67cb;
 	height: 15px;
 	top: -42px;
 	width: 15px;
@@ -4140,8 +4134,6 @@ header a:hover,
 	display: block;
 	padding: 8px 16px;
 	text-transform: capitalize;
-}
-.tab-link {
 	background-color: #071890;
 	border-radius: 5px;
 	color: #fff;
@@ -5032,8 +5024,6 @@ header a:hover,
 *===================================*/
 .top_footer {
 	position:relative;
-}
-.top_footer {
 	padding: 100px 0;
 }
 .footer_title {
@@ -5463,9 +5453,8 @@ button.btn-white:hover {
 	right: -10px;
 	top: -10px;
 	z-index:-1;
-}
-.play_btn::before {
 	animation-delay: 0.8s
+
 }
 @keyframes rounded {
 0%
