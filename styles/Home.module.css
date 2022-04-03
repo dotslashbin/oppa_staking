@@ -30,12 +30,13 @@
   padding: 10px 0px 10px 0px;
 }
 
+
+
 .summary, .stakeForm {
   border: 2px solid #ffffff;
   border-radius: 10px;
   padding: 30px;  
   width: 300px;
-  height: 150px;
   color: #FFFFFF;
   margin-bottom: 10px
 }
@@ -61,13 +62,17 @@
   border: none;
 }
 
-
+.label_white {
+  color: #ffffff;
+}
 
 .highlightedText {
   color: #FD72C0
 }
 
-
+.clickable_link {
+  color: #FBD21C;
+}
 
 .footer {
   padding: 2px;
