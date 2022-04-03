@@ -5,7 +5,7 @@ import styles from '../styles/Home.module.css'
 const TopMenu = (props) => (
 	<header className={ styles.topNavBar }>
 		<div className='log-container'>
-			<Image src='/images/logo.png' alt='OPPA logo' height={50} width={50}/>
+			<Image src='/images/Oppa_Logo.png' alt='OPPA logo' height={40} width={150}/>
 		</div>
 		<div className='wallet-connector'>
 			<div>
