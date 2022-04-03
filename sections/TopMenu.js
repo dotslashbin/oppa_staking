@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-const Header = () => (
+const TopMenu = () => (
 	<header className={ styles.topNavBar }>
 		<div className='log-container'>
 			<Image src='/images/logo.png' alt='OPPA logo' height={50} width={50}/>
@@ -15,4 +15,4 @@ const Header = () => (
 	</header>
 )
 
-export default Header
+export default TopMenu

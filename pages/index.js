@@ -2,12 +2,12 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
 // Sections 
-import HarvestForm from '../sections/harvest'
-import Header from '../sections/header'
-import Footer from '../sections/footer'
-import WalletIndicator from '../sections/wallet'
+import HarvestForm from '../sections/HarvestForm'
+import TopMenu from '../sections/TopMenu'
+import FooterMenu from '../sections/FooterMenu'
+import WalletIndicator from '../sections/WalletIndicator'
 import Summary from '../sections/summary'
-import Stake from '../sections/stake'
+import StakeForm from '../sections/StakeForm'
 
 export default function Home() {
   return (
@@ -18,16 +18,16 @@ export default function Home() {
         <link rel="icon" href="./Oppa_Favicon.png" />
       </Head>
 
-      <Header />
+      <TopMenu />
 
       <main className={styles.main}>
         <WalletIndicator />
-        <Stake />
+        <StakeForm />
         <Summary />
         <HarvestForm />
       </main>
  
-      <Footer />
+      <FooterMenu />
     </div>
   )
 }
