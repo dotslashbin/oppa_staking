@@ -20,8 +20,7 @@ export default function Home() {
 
   const { active, account, library, connector, activate, deactivate } = useWeb3React()
   const [ balance, setBalance ] = useState('')
-
-  
+  const [ hasStake, setHasStake ] = useState(false)
 
   async function connect() {
     try {
@@ -45,9 +44,32 @@ export default function Home() {
     if(active) {
       OPPAtoken.methods.balanceOf(account).call().then(output => setBalance(output))
     }
-  })
 
-  
+  }, [account, active])
+
+  const getForm = () => {
+    if(active) {
+      console.log(hasStake)
+      if(hasStake) {
+        return(
+          <>
+            <Summary balance={ balance } />
+            <HarvestForm balance={ balance } unstake={ unstake }/>
+          </>
+        )
+      } else {
+        return (<StakeForm balance={ balance } activateStake={ activateStake } /> )
+      }
+    }
+  }
+
+  const activateStake = () => {
+    setHasStake(true)
+  }
+
+  const unstake = () => {
+    setHasStake(false)
+  }
 
   return (
     <div className={styles.container}>
@@ -61,12 +83,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <WalletIndicator active={ active } account={ account } />
-        { active ? (<StakeForm />):(
-        <>
-          <Summary balance={ balance } />
-          <HarvestForm balance={ balance } />
-        </>)}
-        
+        { getForm() }
       </main>
  
       <FooterMenu />

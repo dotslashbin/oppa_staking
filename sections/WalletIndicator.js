@@ -6,9 +6,8 @@ import * as _ from 'lodash'
 const shortenAddress = (address) => _.truncate(address, { 'length': 8}) + address.substring(address.length - 4)
 
 const WalletIndicator = (props) => (
-<div>
 	<div>
-		<span>Wallet: </span>
+		<span className={ styles.lable_white }>Wallet: </span>
 		{ props.active? (
 			<span className={ styles.highlightedText }>{ shortenAddress(props.account) }</span>
 		): (
@@ -16,7 +15,6 @@ const WalletIndicator = (props) => (
 		)}
 		
 	</div>
-</div>
 )
 
 export default WalletIndicator
