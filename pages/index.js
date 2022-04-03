@@ -29,14 +29,10 @@ export default function Home() {
   async function disconnect() {
     try {
       console.log('DISCONNECTING WALLET')
-      // deactivate()
+      deactivate()
     } catch (error) {
       console.log(error)
     }
-  }
-
-  const testMe = () => {
-    console.log('oieufoeufoeufo')
   }
 
   return (
@@ -47,13 +43,16 @@ export default function Home() {
         <link rel="icon" href="./Oppa_Favicon.png" />
       </Head>
     
-      <TopMenu test={ testMe } active={ active } connect={ connect } />
+      <TopMenu active={ active } connect={ connect } disconnect={ disconnect } />
 
       <main className={styles.main}>
-        <WalletIndicator />
-        <StakeForm />
-        <Summary />
-        <HarvestForm />
+        <WalletIndicator active={ active } account={ account } />
+        { active ? (<StakeForm />):(
+        <>
+          <Summary />
+          <HarvestForm />
+        </>)}
+        
       </main>
  
       <FooterMenu />
