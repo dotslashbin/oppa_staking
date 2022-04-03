@@ -5,7 +5,7 @@ import Countdown from 'react-countdown'
 
 function Summary(props) {
 
-	const renderer = ({ hours, minutes, seconds, completed }) => {
+	const renderer = ({ minutes, seconds, completed }) => {
 		if (completed ){
 			return "Reward credited..."
 		} else {

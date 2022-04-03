@@ -1,4 +1,3 @@
-import { replaceBasePath } from 'next/dist/server/router'
 import React from 'react'
 import styles from '../styles/Home.module.css'
 import * as _ from 'lodash'

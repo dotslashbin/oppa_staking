@@ -18,7 +18,9 @@ import StakeForm from '../sections/StakeForm'
 
 export default function Home() {
 
-  const { active, account, library, connector, activate, deactivate } = useWeb3React()
+  // const { active, account, library, connector, activate, deactivate } = useWeb3React()
+  const { active, account, activate, deactivate } = useWeb3React()
+
   const [ balance, setBalance ] = useState('')
   const [ hasStake, setHasStake ] = useState(false)
 
