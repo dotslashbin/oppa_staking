@@ -2,6 +2,13 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Image from 'next/image'
 
+// Sections 
+import HarvestForm from '../sections/harvest'
+import Header from '../sections/header'
+import Footer from '../sections/footer'
+import WalletIndicator from '../sections/wallet'
+import Summary from '../sections/summary'
+import Stake from '../sections/stake'
 
 export default function Home() {
   return (
@@ -12,34 +19,16 @@ export default function Home() {
         <link rel="icon" href="./Oppa_Favicon.png" />
       </Head>
 
-      <header className={ styles.topNavBar }>
-        <div className='log-container'>
-          <Image src='/images/logo.png' alt='OPPA logo' height={50} width={50}/>
-        </div>
-        <div className='wallet-connector'>
-          <div>
-            <button>Connect Wallet</button>
-          </div>
-        </div>
-        
-      </header>
+      <Header />
 
       <main className={styles.main}>
-        <div>
-          <span>CONNECTED WALLET: </span>
-          <span>...ABCD</span>
-          <div>
-            Current OPPA BALANCE: 100
-          </div>
-          <div>
-            Current Staking delegation: 123
-          </div>
-        </div>
+        <WalletIndicator />
+        <Stake />
+        {/* <Summary /> */}
+        {/* <HarvestForm /> */}
       </main>
-
-      <footer className={styles.footer}>
-        Some footer thing
-      </footer>
+ 
+      <Footer />
     </div>
   )
 }

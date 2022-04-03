@@ -1,27 +1,78 @@
+.container { 
+  background-color: #1D1671;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  min-height: 100vh;
+}
+
+.control {
+  text-align: center;
+}
+
+.notices {
+  font-style: italic;
+}
+
 .topNavBar {
   background-color: #052D85;
-
   display: flex;
   justify-content: space-between;
+  height: 40px;
 }
 
 .main {
-  background-color: #1D1671;
-  min-height: 100vh;
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 10px 0px 10px 0px;
 }
 
-.footer {
+.summary, .stakeForm {
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  padding: 30px;  
+  width: 300px;
+  height: 150px;
+  color: #FFFFFF;
+  margin-bottom: 10px
+}
+
+.stakeClear {
+  margin-top: 10px;
   display: flex;
-  flex: 1;
-  /* padding: 2rem 0; */
-  border-top: 1px solid #eaeaea;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+}
+
+.inputContainer {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.formInput {
+  display: flex;
+  justify-content: space-between;
+}
+
+.formInput input {
+  width: 60%;
+  border: none;
+}
+
+
+
+.highlightedText {
+  color: #FD72C0
+}
+
+
+
+.footer {
+  padding: 2px;
+  justify-content: flex-end;
+  background-color: #ffffff;
 }
 
 .footer a {
@@ -29,6 +80,8 @@
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+  color: gray;
+  cursor: pointer;
 }
 
 .title a {
