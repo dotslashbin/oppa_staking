@@ -1,10 +1,10 @@
 import React from 'react'
 import styles from '../styles/Home.module.css'
 
-const Summary = () => (
+const Summary = (props) => (
 	<div className={ styles.summary }>
 		<div>
-			OPPA: <span className={ styles.highlightedText }>112,300,000,000,000,000</span>
+			OPPA: <span className={ styles.highlightedText }>{ props.balance }</span>
 		</div>
 		<div>
 			Your current staking delgation: <span className={ styles.highlightedText } >1,000,000,000</span>

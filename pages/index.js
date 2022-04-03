@@ -1,9 +1,12 @@
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
 // Web3 tools
 import { useWeb3React } from "@web3-react/core"
 import { injected } from '../app/wallet/Connector'
+
+import { OPPAtoken } from '../contract'
 
 // Sections 
 import HarvestForm from '../sections/HarvestForm'
@@ -16,6 +19,9 @@ import StakeForm from '../sections/StakeForm'
 export default function Home() {
 
   const { active, account, library, connector, activate, deactivate } = useWeb3React()
+  const [ balance, setBalance ] = useState('')
+
+  
 
   async function connect() {
     try {
@@ -35,6 +41,14 @@ export default function Home() {
     }
   }
 
+  useEffect(() => {
+    if(active) {
+      OPPAtoken.methods.balanceOf(account).call().then(output => setBalance(output))
+    }
+  })
+
+  
+
   return (
     <div className={styles.container}>
       <Head>
@@ -49,8 +63,8 @@ export default function Home() {
         <WalletIndicator active={ active } account={ account } />
         { active ? (<StakeForm />):(
         <>
-          <Summary />
-          <HarvestForm />
+          <Summary balance={ balance } />
+          <HarvestForm balance={ balance } />
         </>)}
         
       </main>

@@ -1,10 +1,10 @@
 import React from 'react'
 import styles from '../styles/Home.module.css'
 
-const StakeForm = () => (
+const StakeForm = (props) => (
 	<div className={ styles.summary }>
 		<div>
-			OPPA balance: <span className={ styles.highlightedText }>112,300,000,000,000,000</span>
+			OPPA balance: <span className={ styles.highlightedText }>{ props.balance }</span>
 		</div>
 		<div className={ styles.inputContainer }>
 			<label>Amount to stake</label>
