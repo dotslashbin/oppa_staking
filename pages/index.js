@@ -15,6 +15,7 @@ import FooterMenu from '../sections/FooterMenu'
 import WalletIndicator from '../sections/WalletIndicator'
 import Summary from '../sections/summary'
 import StakeForm from '../sections/StakeForm'
+import Web3 from 'web3'
 
 export default function Home() {
 
@@ -44,7 +45,7 @@ export default function Home() {
 
   useEffect(() => {
     if(active) {
-      OPPAtoken.methods.balanceOf(account).call().then(output => setBalance(output))
+      OPPAtoken.methods.balanceOf(account).call().then(output => setBalance(Web3.utils.fromWei(output,'Gwei')))
     }
 
   }, [account, active])
