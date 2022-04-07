@@ -9,6 +9,7 @@ import { injected } from '../app/wallet/Connector'
 import { OPPAtoken } from '../contract'
 
 // Sections 
+import Calculator from '../sections/Calculator'
 import HarvestForm from '../sections/HarvestForm'
 import TopMenu from '../sections/TopMenu'
 import FooterMenu from '../sections/FooterMenu'
@@ -23,6 +24,7 @@ export default function Home() {
   const { active, account, activate, deactivate } = useWeb3React()
 
   const [ balance, setBalance ] = useState('')
+  const [ balanceInWei, setBalanceInWei ] = useState(0)
   const [ hasStake, setHasStake ] = useState(false)
 
   async function connect() {
@@ -45,12 +47,15 @@ export default function Home() {
 
   useEffect(() => {
     if(active) {
-      OPPAtoken.methods.balanceOf(account).call().then(output => setBalance(Web3.utils.fromWei(output,'Gwei')))
+      OPPAtoken.methods.balanceOf(account).call().then(output => {
+        setBalanceInWei(output)
+        setBalance(Web3.utils.fromWei(output,'Gwei'))
+      })
     }
 
   }, [account, active])
 
-  const getForm = () => {
+  const showDashboard = () => {
     if(active) {
       console.log(hasStake)
       if(hasStake) {
@@ -85,8 +90,9 @@ export default function Home() {
       <TopMenu active={ active } connect={ connect } disconnect={ disconnect } />
 
       <main className={styles.main}>
+        { active? <Calculator balance={ balance } />: (<></>)}
         <WalletIndicator active={ active } account={ account } />
-        { getForm() }
+        { showDashboard() }
       </main>
  
       <FooterMenu />
