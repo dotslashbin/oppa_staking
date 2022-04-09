@@ -1,12 +1,12 @@
 FROM node:lts as dependencies
-WORKDIR /my-project
+WORKDIR /oppa
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
 FROM node:lts as builder
-WORKDIR /my-project
+WORKDIR /oppa
 COPY . .
-COPY --from=dependencies /my-project/node_modules ./node_modules
+COPY --from=dependencies /oppa/node_modules ./node_modules
 RUN yarn build
 
 FROM node:lts as runner
