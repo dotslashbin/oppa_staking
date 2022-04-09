@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import styles from '../styles/Home.module.css'
 
+import { GetEpochValues } from '../app/utils'
+
 const REWARD_PERCENTAGE = 0.00005
-const EPOCh_YEAR = 52559
-const EPOCh_MONT = 4380
-const EPOCh__DAY = 144
 
 const epochPeriods = ['Day', 'Month', 'Year']
 
@@ -18,10 +17,14 @@ function Calculator(props)  {
 
 	const generate = (baseValue) => {
 		let container = []
-
 		let endingBalance = 0
-		
-		for (var i = 1; i <= EPOCh_YEAR; i++) {
+		const epochValues = GetEpochValues(activeEpoch)
+
+		if(epochValues === 0) {
+			return
+		}
+
+		for (var i = 1; i <= (epochValues * parseInt(projectionInput)); i++) {
 			if(i === 1) {
 				endingBalance = baseValue
 			}
@@ -77,7 +80,7 @@ function Calculator(props)  {
 			</div>
 
 			<div className={ styles.dashboardActivityButtons }>
-				<button onClick={() => { generate( parseFloat(props.balance) ) }}>Calculate</button>
+				<button onClick={() => { generate( parseFloat(baseBalance) ) }}>Calculate</button>
 				<a className={ styles.clickable_link } onClick={() => { resetCalculator() }} >Reset</a>
 			</div>
 			
