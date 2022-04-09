@@ -25,7 +25,7 @@ function StakeForm(props) {
 				</div>
 			</div>
 	
-			<div className={ styles.stakeClear }>
+			<div className={ styles.dashboardActivityButtons }>
 				<button onClick={() => { props.activateStake(true) } }>Stake</button>
 				<a className={ styles.clickable_link } href='#' onClick={() => { setStakedAmount('') }} >Reset</a>
 			</div>

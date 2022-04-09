@@ -60,7 +60,7 @@ export default function Home() {
   const showCalculator = () => {
     if(!active) return
 
-    return <Calculator />
+    return <Calculator balance={ balance } />
   }
 
   const showStakeNHarvest = () => {
