@@ -16,7 +16,7 @@ function Calculator(props)  {
 	
 
 	const generate = (baseValue) => {
-		const container = []
+		// const container = []
 		let endingBalance = 0
 		const epochValues = GetEpochValues(activeEpoch)
 
@@ -29,7 +29,7 @@ function Calculator(props)  {
 				endingBalance = baseValue
 			}
 			const valueToAdd = (endingBalance/100)*(REWARD_PERCENTAGE)
-			container.push(valueToAdd)
+			// container.push(valueToAdd)
 			endingBalance += valueToAdd
 		}
 
