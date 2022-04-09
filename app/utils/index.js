@@ -7,3 +7,8 @@ export function GetEpochValues(duration) {
 		return 144
 	}
 }
+
+export function GetPercentageFromValue(percentage, totalValue) {
+	const amontToSubtract =  (100 * percentage) / totalValue;
+	return (totalValue - amontToSubtract)
+}

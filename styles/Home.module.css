@@ -56,6 +56,15 @@
   margin-bottom: 10px;
 }
 
+.fieldMessage {
+  font-style: italic;
+  font-size: smaller;
+}
+
+.fieldMessageContianer {
+  
+}
+
 .formInput {
   display: flex;
   justify-content: space-between;
