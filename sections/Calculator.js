@@ -63,16 +63,19 @@ function Calculator(props)  {
 	return(
 		<div className={ styles.summary }>
 			<div className='instructions'>
-				Here, you can calculate your earnings based on month, day and year. You may input your desired balance, or automatically fill with 90% of your current balance.
+				Enter a projected amount, or automatically calculate for your current balance. 
 			</div>
-
 			<div className={ styles.inputContainer }>
 				<div>
-					OPPA balance: <span className={ styles.highlightedText }>{ props.balance }</span>
+					1. Enter a the amount of tokens you want to stake. You currently have : <span className={ styles.highlightedText }>{ props.balance }</span> OPPA
 				</div>
 				<div className={ styles.formInput } >
 					<input type='text' value={ baseBalance } onChange={ updateBaseBalance } pattern="[0-9.]*" />
 					<a className={ styles.clickable_link } onClick={() => { autoFillBalance() }}>auto fill</a>
+				</div>
+
+				<div>
+					2. FIll in your projected duration below. 
 				</div>
 
 				<div className={ styles.formInput } >
@@ -80,14 +83,14 @@ function Calculator(props)  {
 						<input className={ styles.smaller } type='text' value={ projectionInput } onChange={ updateProjectionInput } pattern="[0-9]*" />
 					</div>
 					<div className={ styles.epochOptions }>
-						{ epochPeriods.map((period, key) => <span onClick={() => { setActiveEpoh(period) }} key={ key } className={ activeEpoch === period ? styles.epochOption:'' } >{ period }</span>) }
+						{ epochPeriods.map((period, key) => <span onClick={() => { setActiveEpoh(period) }} key={ key } className={ activeEpoch === period ? styles.epochOption:'' } >{ period }(s)</span>) }
 					</div>
 				</div>
 
 			</div>
 
 			<div>
-				Final Balance: { finalBalance }
+				Resulting Balance: { finalBalance }
 			</div>
 
 			<div className={ styles.dashboardActivityButtons }>
