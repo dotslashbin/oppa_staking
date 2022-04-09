@@ -88,6 +88,18 @@ export default function Home() {
 
   const toggleDashboards = () => (activeDashboard === STAKE_HARVEST_DASHBOARD? setActiveDashboard(CALCULATOR_DASHBOARD):setActiveDashboard(STAKE_HARVEST_DASHBOARD))
 
+  const getDashboardMenus = () => {
+    if(active) {
+      return (
+        <div>
+          <span onClick={() => {toggleDashboards() }} className={ styles.clickable_link } >Go to { activeDashboard === STAKE_HARVEST_DASHBOARD? 'Calculator':'Staking'}</span>
+        </div>
+      )
+    }
+
+    return (<></>)
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -101,11 +113,7 @@ export default function Home() {
       <main className={styles.main}>
         <WalletIndicator active={ active } account={ account } />
         { activeDashboard === STAKE_HARVEST_DASHBOARD ? showStakeNHarvest():showCalculator() }
-        { active? (
-          <div>
-            <span onClick={() => {toggleDashboards() }} className={ styles.clickable_link } >Go to { activeDashboard === STAKE_HARVEST_DASHBOARD? 'Calculator':'Staking'}</span>
-          </div>
-        ): (<></>)}
+        { getDashboardMenus() }
       </main>
  
       <FooterMenu />

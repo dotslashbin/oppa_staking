@@ -16,7 +16,7 @@ function Calculator(props)  {
 	
 
 	const generate = (baseValue) => {
-		let container = []
+		const container = []
 		let endingBalance = 0
 		const epochValues = GetEpochValues(activeEpoch)
 
