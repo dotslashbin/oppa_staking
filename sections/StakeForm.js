@@ -9,7 +9,9 @@ function StakeForm(props) {
 	const [ fieldMessage, setFieldMessage ] = useState('')
 
 	const handleChange = (event) => {
-		setStakedAmount(event.target.value)
+		if (event.target.validity.valid) {
+			setStakedAmount(event.target.value)
+		}
 	}
 
 	const useMaxBalance = () => {
@@ -36,7 +38,7 @@ function StakeForm(props) {
 				<label>Amount to stake</label>
 				<div className={ styles.formInput } >
 					<div>
-						<input type='text' value={ stakedAmount } onChange={ handleChange }/>
+						<input type='text' value={ stakedAmount } onChange={ handleChange } pattern="[0-9.]*"/>
 						<div className={ styles.fieldMessageContianer }>
 						{ fieldMessage? (<span className={ styles.fieldMessage } >{ fieldMessage }</span>):null }
 						</div>

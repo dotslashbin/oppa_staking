@@ -37,11 +37,15 @@ function Calculator(props)  {
 	}
 
 	const updateBaseBalance = (event) => {
-		setBaseBalance(event.target.value)
+		if(event.target.validity.valid) {
+			setBaseBalance(event.target.value)
+		}
 	}
 
 	const updateProjectionInput = (event) => {
-		setProjectionInput(event.target.value)
+		if (event.target.validity.valid) {
+			setProjectionInput(event.target.value)
+		}
 	}
 
 	const resetCalculator = () => {
@@ -60,13 +64,13 @@ function Calculator(props)  {
 			<div className={ styles.inputContainer }>
 				<label>Starting balance</label>
 				<div className={ styles.formInput } >
-					<input type='text' value={ baseBalance } onChange={ updateBaseBalance }/>
+					<input type='text' value={ baseBalance } onChange={ updateBaseBalance } pattern="[0-9.]*" />
 					<a className={ styles.clickable_link } onClick={() => { setBaseBalance(props.balance) }}>auto fill</a>
 				</div>
 
 				<div className={ styles.formInput } >
 					<div>
-						<input className={ styles.smaller } type='text' value={ projectionInput } onChange={ updateProjectionInput }/>
+						<input className={ styles.smaller } type='text' value={ projectionInput } onChange={ updateProjectionInput } pattern="[0-9]*" />
 					</div>
 					<div className={ styles.epochOptions }>
 						{ epochPeriods.map((period, key) => <span onClick={() => { setActiveEpoh(period) }} key={ key } className={ activeEpoch === period ? styles.epochOption:'' } >{ period }</span>) }
