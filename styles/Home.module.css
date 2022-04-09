@@ -11,26 +11,23 @@
   text-align: center;
 }
 
-.notices {
-  font-style: italic;
-}
-
-.topNavBar {
-  background-color: #052D85;
+.dashboardTop {
   display: flex;
   justify-content: space-between;
-  height: 40px;
+  width: 90%;
 }
 
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   padding: 10px 0px 10px 0px;
 }
 
-
+.notices {
+  font-style: italic;
+}
 
 .summary, .stakeForm {
   border: 2px solid #ffffff;
@@ -41,10 +38,17 @@
   margin-bottom: 10px
 }
 
-.stakeClear {
+.dashboardActivityButtons {
   margin-top: 10px;
   display: flex;
   justify-content: space-between;
+}
+
+.topNavBar {
+  background-color: #052D85;
+  display: flex;
+  justify-content: space-between;
+  height: 40px;
 }
 
 .inputContainer {
@@ -52,14 +56,40 @@
   margin-bottom: 10px;
 }
 
+.fieldMessage {
+  font-style: italic;
+  font-size: smaller;
+}
+
 .formInput {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .formInput input {
   width: 60%;
   border: none;
+}
+
+.formInput input.smaller {
+  width: 10%;
+}
+
+.epochOptions {
+  display: flex;
+}
+
+.epochOptions span {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.epochOption{
+  border: 1px solid white;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 2px;
 }
 
 .label_white {
@@ -72,6 +102,11 @@
 
 .clickable_link {
   color: #FBD21C;
+}
+
+.topMenu {
+  padding: 2px;
+  justify-content: flex-start;
 }
 
 .footer {

@@ -9,6 +9,7 @@ import { injected } from '../app/wallet/Connector'
 import { OPPAtoken } from '../contract'
 
 // Sections 
+import Calculator from '../sections/Calculator'
 import HarvestForm from '../sections/HarvestForm'
 import TopMenu from '../sections/TopMenu'
 import FooterMenu from '../sections/FooterMenu'
@@ -17,6 +18,9 @@ import Summary from '../sections/summary'
 import StakeForm from '../sections/StakeForm'
 import Web3 from 'web3'
 
+const STAKE_HARVEST_DASHBOARD = 1
+const CALCULATOR_DASHBOARD = 2
+
 export default function Home() {
 
   // const { active, account, library, connector, activate, deactivate } = useWeb3React()
@@ -24,6 +28,7 @@ export default function Home() {
 
   const [ balance, setBalance ] = useState('')
   const [ hasStake, setHasStake ] = useState(false)
+  const [ activeDashboard, setActiveDashboard ] = useState(STAKE_HARVEST_DASHBOARD)
 
   async function connect() {
     try {
@@ -38,31 +43,38 @@ export default function Home() {
     try {
       console.log('DISCONNECTING WALLET')
       deactivate()
-    } catch (error) {
+     } catch (error) {
       console.log(error)
     }
   }
 
   useEffect(() => {
     if(active) {
-      OPPAtoken.methods.balanceOf(account).call().then(output => setBalance(Web3.utils.fromWei(output,'Gwei')))
+      OPPAtoken.methods.balanceOf(account).call().then(output => {
+        setBalance(Web3.utils.fromWei(output,'Gwei'))
+      })
     }
 
   }, [account, active])
 
-  const getForm = () => {
-    if(active) {
-      console.log(hasStake)
-      if(hasStake) {
-        return(
-          <>
-            <Summary balance={ balance } />
-            <HarvestForm balance={ balance } unstake={ unstake }/>
-          </>
-        )
-      } else {
-        return (<StakeForm balance={ balance } activateStake={ activateStake } /> )
-      }
+  const showCalculator = () => {
+    if(!active) return
+
+    return <Calculator balance={ balance } />
+  }
+
+  const showStakeNHarvest = () => {
+    if(!active) return
+
+    if(hasStake) {
+      return(
+        <>
+          <Summary balance={ balance } />
+          <HarvestForm balance={ balance } unstake={ unstake }/>
+        </>
+      )
+    } else {
+      return (<StakeForm balance={ balance } activateStake={ activateStake } /> )
     }
   }
 
@@ -72,6 +84,20 @@ export default function Home() {
 
   const unstake = () => {
     setHasStake(false)
+  }
+
+  const toggleDashboards = () => (activeDashboard === STAKE_HARVEST_DASHBOARD? setActiveDashboard(CALCULATOR_DASHBOARD):setActiveDashboard(STAKE_HARVEST_DASHBOARD))
+
+  const getDashboardMenus = () => {
+    if(active) {
+      return (
+        <div>
+          <span onClick={() => {toggleDashboards() }} className={ styles.clickable_link } >Go to { activeDashboard === STAKE_HARVEST_DASHBOARD? 'Calculator':'Staking'}</span>
+        </div>
+      )
+    }
+
+    return (<></>)
   }
 
   return (
@@ -86,7 +112,8 @@ export default function Home() {
 
       <main className={styles.main}>
         <WalletIndicator active={ active } account={ account } />
-        { getForm() }
+        { activeDashboard === STAKE_HARVEST_DASHBOARD ? showStakeNHarvest():showCalculator() }
+        { getDashboardMenus() }
       </main>
  
       <FooterMenu />
