@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from '../styles/Home.module.css'
 
-import { GetPercentageFromValue } from '../app/utils'
+import { GetAllowedStakablePercentage, GetPercentageFromValue } from '../app/utils'
 
 function StakeForm(props) {
 
@@ -15,7 +15,8 @@ function StakeForm(props) {
 	}
 
 	const useMaxBalance = () => {
-		const maxValue = GetPercentageFromValue(90, parseFloat(props.balance))
+		const allowablePercentage = GetAllowedStakablePercentage()
+		const maxValue = GetPercentageFromValue(allowablePercentage, parseFloat(props.balance))
 		setStakedAmount(maxValue.toString())
 		setFieldMessage('You can only use 90% of your balance')
 	}

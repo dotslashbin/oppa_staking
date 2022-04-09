@@ -8,6 +8,10 @@ export function GetEpochValues(duration) {
 	}
 }
 
+export function GetAllowedStakablePercentage() {
+	return 90;
+}
+
 export function GetPercentageFromValue(percentage, totalValue) {
 	const amontToSubtract =  (100 * percentage) / totalValue;
 	return (totalValue - amontToSubtract)

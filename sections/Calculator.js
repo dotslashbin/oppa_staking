@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from '../styles/Home.module.css'
 
-import { GetEpochValues } from '../app/utils'
+import { GetAllowedStakablePercentage, GetEpochValues, GetPercentageFromValue } from '../app/utils'
 
 const REWARD_PERCENTAGE = 0.00005
 
@@ -55,17 +55,24 @@ function Calculator(props)  {
 		setProjectionInput('')
 	}
 
+	const autoFillBalance = () => {
+		const allowableStakeAmount = GetPercentageFromValue(GetAllowedStakablePercentage(), props.balance)
+		setBaseBalance(allowableStakeAmount)
+	}
+
 	return(
 		<div className={ styles.summary }>
 			<div className='instructions'>
-				Here, you can calculate your earnings based on month, day and year. You may input any hypothetical balance, or use your current balance for the projections.
+				Here, you can calculate your earnings based on month, day and year. You may input your desired balance, or automatically fill with 90% of your current balance.
 			</div>
 
 			<div className={ styles.inputContainer }>
-				<label>Starting balance</label>
+				<div>
+					OPPA balance: <span className={ styles.highlightedText }>{ props.balance }</span>
+				</div>
 				<div className={ styles.formInput } >
 					<input type='text' value={ baseBalance } onChange={ updateBaseBalance } pattern="[0-9.]*" />
-					<a className={ styles.clickable_link } onClick={() => { setBaseBalance(props.balance) }}>auto fill</a>
+					<a className={ styles.clickable_link } onClick={() => { autoFillBalance() }}>auto fill</a>
 				</div>
 
 				<div className={ styles.formInput } >
