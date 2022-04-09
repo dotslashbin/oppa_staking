@@ -11,26 +11,23 @@
   text-align: center;
 }
 
-.notices {
-  font-style: italic;
-}
-
-.topNavBar {
-  background-color: #052D85;
+.dashboardTop {
   display: flex;
   justify-content: space-between;
-  height: 40px;
+  width: 90%;
 }
 
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   padding: 10px 0px 10px 0px;
 }
 
-
+.notices {
+  font-style: italic;
+}
 
 .summary, .stakeForm {
   border: 2px solid #ffffff;
@@ -45,6 +42,13 @@
   margin-top: 10px;
   display: flex;
   justify-content: space-between;
+}
+
+.topNavBar {
+  background-color: #052D85;
+  display: flex;
+  justify-content: space-between;
+  height: 40px;
 }
 
 .inputContainer {
@@ -72,6 +76,11 @@
 
 .clickable_link {
   color: #FBD21C;
+}
+
+.topMenu {
+  padding: 2px;
+  justify-content: flex-start;
 }
 
 .footer {

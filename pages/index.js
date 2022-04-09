@@ -18,14 +18,17 @@ import Summary from '../sections/summary'
 import StakeForm from '../sections/StakeForm'
 import Web3 from 'web3'
 
+const STAKE_HARVEST_DASHBOARD = 1
+const CALCULATOR_DASHBOARD = 2
+
 export default function Home() {
 
   // const { active, account, library, connector, activate, deactivate } = useWeb3React()
   const { active, account, activate, deactivate } = useWeb3React()
 
   const [ balance, setBalance ] = useState('')
-  const [ balanceInWei, setBalanceInWei ] = useState(0)
   const [ hasStake, setHasStake ] = useState(false)
+  const [ activeDashboard, setActiveDashboard ] = useState(STAKE_HARVEST_DASHBOARD)
 
   async function connect() {
     try {
@@ -40,7 +43,7 @@ export default function Home() {
     try {
       console.log('DISCONNECTING WALLET')
       deactivate()
-    } catch (error) {
+     } catch (error) {
       console.log(error)
     }
   }
@@ -48,26 +51,30 @@ export default function Home() {
   useEffect(() => {
     if(active) {
       OPPAtoken.methods.balanceOf(account).call().then(output => {
-        setBalanceInWei(output)
         setBalance(Web3.utils.fromWei(output,'Gwei'))
       })
     }
 
   }, [account, active])
 
-  const showDashboard = () => {
-    if(active) {
-      console.log(hasStake)
-      if(hasStake) {
-        return(
-          <>
-            <Summary balance={ balance } />
-            <HarvestForm balance={ balance } unstake={ unstake }/>
-          </>
-        )
-      } else {
-        return (<StakeForm balance={ balance } activateStake={ activateStake } /> )
-      }
+  const showCalculator = () => {
+    if(!active) return
+
+    return <Calculator />
+  }
+
+  const showStakeNHarvest = () => {
+    if(!active) return
+
+    if(hasStake) {
+      return(
+        <>
+          <Summary balance={ balance } />
+          <HarvestForm balance={ balance } unstake={ unstake }/>
+        </>
+      )
+    } else {
+      return (<StakeForm balance={ balance } activateStake={ activateStake } /> )
     }
   }
 
@@ -78,6 +85,8 @@ export default function Home() {
   const unstake = () => {
     setHasStake(false)
   }
+
+  const toggleDashboards = () => (activeDashboard === STAKE_HARVEST_DASHBOARD? setActiveDashboard(CALCULATOR_DASHBOARD):setActiveDashboard(STAKE_HARVEST_DASHBOARD))
 
   return (
     <div className={styles.container}>
@@ -90,9 +99,13 @@ export default function Home() {
       <TopMenu active={ active } connect={ connect } disconnect={ disconnect } />
 
       <main className={styles.main}>
-        { active? <Calculator balance={ balance } />: (<></>)}
         <WalletIndicator active={ active } account={ account } />
-        { showDashboard() }
+        { activeDashboard === STAKE_HARVEST_DASHBOARD ? showStakeNHarvest():showCalculator() }
+        { active? (
+          <div>
+            <span onClick={() => {toggleDashboards() }} className={ styles.clickable_link } >Go to { activeDashboard === STAKE_HARVEST_DASHBOARD? 'Calculator':'Staking'}</span>
+          </div>
+        ): (<></>)}
       </main>
  
       <FooterMenu />
