@@ -6,11 +6,15 @@ const EPOCh_YEAR = 52559
 const EPOCh_MONT = 4380
 const EPOCh__DAY = 144
 
+const epochPeriods = ['Day', 'Month', 'Year']
+
 function Calculator(props)  {
 
 	const [ baseBalance, setBaseBalance ] = useState('')
 	const [ projectionInput, setProjectionInput ] = useState('')
-	const [ activeEpoch, setActiveEpoh ] = useState('year')
+	const [ activeEpoch, setActiveEpoh ] = useState('Year')
+	const [ finalBalance, setFinalBalance ] = useState('')
+	
 
 	const generate = (baseValue) => {
 		let container = []
@@ -26,7 +30,7 @@ function Calculator(props)  {
 			endingBalance += valueToAdd
 		}
 
-		console.log(endingBalance)
+		setFinalBalance(endingBalance.toString())
 	}
 
 	const updateBaseBalance = (event) => {
@@ -35,6 +39,13 @@ function Calculator(props)  {
 
 	const updateProjectionInput = (event) => {
 		setProjectionInput(event.target.value)
+	}
+
+	const resetCalculator = () => {
+		setActiveEpoh('Year')
+		setFinalBalance('')
+		setBaseBalance('')
+		setProjectionInput('')
 	}
 
 	return(
@@ -55,16 +66,19 @@ function Calculator(props)  {
 						<input className={ styles.smaller } type='text' value={ projectionInput } onChange={ updateProjectionInput }/>
 					</div>
 					<div className={ styles.epochOptions }>
-						<span>Day</span>
-						<span>Month</span>
-						<span className={ activeEpoch === 'year'? styles.epochOption:'' } >Year</span>
+						{ epochPeriods.map((period, key) => <span onClick={() => { setActiveEpoh(period) }} key={ key } className={ activeEpoch === period ? styles.epochOption:'' } >{ period }</span>) }
 					</div>
 				</div>
 
 			</div>
 
+			<div>
+				Final Balance: { finalBalance }
+			</div>
+
 			<div className={ styles.dashboardActivityButtons }>
 				<button onClick={() => { generate( parseFloat(props.balance) ) }}>Calculate</button>
+				<a className={ styles.clickable_link } onClick={() => { resetCalculator() }} >Reset</a>
 			</div>
 			
 		</div>
