@@ -9,7 +9,7 @@ function Summary(props) {
 		if (completed ){
 			return "Reward credited..."
 		} else {
-			return `${ minutes }: ${ seconds }`
+			return `${ minutes } minutes and ${ seconds } seconds`
 		}
 	}
 
@@ -25,7 +25,7 @@ function Summary(props) {
 				Rewards collected: <span className={ styles.highlightedText } >1,234,456</span>
 			</div>
 			<div>
-				Next rewards comes in: <psan className={ styles.highlightedText }><Countdown date={ Date.now() + 15000000 } renderer={ renderer } /></psan>
+				You will be getting: <span className={ styles.highlightedText }>123321</span> in <Countdown date={ Date.now() + 15000000 } renderer={ renderer } />
 			</div>
 		</div>
 	)

@@ -92,6 +92,9 @@ function Calculator(props)  {
 			<div>
 				Resulting Balance: { finalBalance }
 			</div>
+			<div>
+				Total Earnings: { finalBalance - baseBalance }
+			</div>
 
 			<div className={ styles.dashboardActivityButtons }>
 				<button onClick={() => { generate( parseFloat(baseBalance) ) }}>Calculate</button>
