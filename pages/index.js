@@ -74,7 +74,7 @@ export default function Home() {
         </>
       )
     } else {
-      return (<StakeForm balance={ balance } activateStake={ activateStake } /> )
+      return (<StakeForm balance={ balance } activateStake={ activateStake } account={ account } /> )
     }
   }
 
