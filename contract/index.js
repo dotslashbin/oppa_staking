@@ -1,5 +1,5 @@
 import Web3 from 'web3'
-import { TOKEN_ADDRESS } from '../config'
+import { TOKEN_ADDRESS, STAKING_CONTRACT_ADDRESS } from '../config'
 
 export const web3Provider = new Web3(
 	Web3.givenProvider || 'http://localhost:8545'
@@ -257,4 +257,402 @@ export const OPPAtoken = new web3Provider.eth.Contract(
 		}
 	],
 	TOKEN_ADDRESS
+)
+
+export const OPPAStaking = new web3Provider.eth.Contract(
+	[
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "token",
+					"type": "address"
+				}
+			],
+			"stateMutability": "nonpayable",
+			"type": "constructor"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "staker",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "index",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "timestamp",
+					"type": "uint256"
+				}
+			],
+			"name": "Staked",
+			"type": "event"
+		},
+		{
+			"inputs": [],
+			"name": "GetAdminAddress",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "GetAllStakeholders",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "address",
+							"name": "user",
+							"type": "address"
+						},
+						{
+							"components": [
+								{
+									"internalType": "address",
+									"name": "user",
+									"type": "address"
+								},
+								{
+									"internalType": "uint256",
+									"name": "amount",
+									"type": "uint256"
+								},
+								{
+									"internalType": "uint256",
+									"name": "since",
+									"type": "uint256"
+								}
+							],
+							"internalType": "struct OPPA_staking.Stake[]",
+							"name": "address_stakes",
+							"type": "tuple[]"
+						}
+					],
+					"internalType": "struct OPPA_staking.Stakeholder[]",
+					"name": "",
+					"type": "tuple[]"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "GetAvailableStakingBalance",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "GetNextRewardDetails",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "uint256",
+							"name": "epoch_difference",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "difference_in_minutes",
+							"type": "uint256"
+						}
+					],
+					"internalType": "struct OPPA_staking.Reward",
+					"name": "",
+					"type": "tuple"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "GetStake",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "address",
+							"name": "user",
+							"type": "address"
+						},
+						{
+							"components": [
+								{
+									"internalType": "address",
+									"name": "user",
+									"type": "address"
+								},
+								{
+									"internalType": "uint256",
+									"name": "amount",
+									"type": "uint256"
+								},
+								{
+									"internalType": "uint256",
+									"name": "since",
+									"type": "uint256"
+								}
+							],
+							"internalType": "struct OPPA_staking.Stake[]",
+							"name": "address_stakes",
+							"type": "tuple[]"
+						}
+					],
+					"internalType": "struct OPPA_staking.Stakeholder",
+					"name": "",
+					"type": "tuple"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "GetStakeHolderCount",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "GetStakingTokenAddress",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				}
+			],
+			"name": "GetValueToAdd",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "Pause",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "_value",
+					"type": "uint256"
+				}
+			],
+			"name": "SetRewardsFrequency",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "_value",
+					"type": "uint256"
+				}
+			],
+			"name": "SetRewardsPercentage",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "input",
+					"type": "address"
+				}
+			],
+			"name": "SetStakingTokenAddress",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				}
+			],
+			"name": "StakeTokens",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "success",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "UnPause",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "UnstakeTokens",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "address",
+							"name": "user",
+							"type": "address"
+						},
+						{
+							"components": [
+								{
+									"internalType": "address",
+									"name": "user",
+									"type": "address"
+								},
+								{
+									"internalType": "uint256",
+									"name": "amount",
+									"type": "uint256"
+								},
+								{
+									"internalType": "uint256",
+									"name": "since",
+									"type": "uint256"
+								}
+							],
+							"internalType": "struct OPPA_staking.Stake[]",
+							"name": "address_stakes",
+							"type": "tuple[]"
+						}
+					],
+					"internalType": "struct OPPA_staking.Stakeholder",
+					"name": "",
+					"type": "tuple"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "_wallet",
+					"type": "address"
+				},
+				{
+					"internalType": "uint256",
+					"name": "_amount",
+					"type": "uint256"
+				}
+			],
+			"name": "WidthrawToWallet",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "success",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "stakingPeriod",
+					"type": "uint256"
+				}
+			],
+			"name": "_getEpochIterations",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "_is_active",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		}
+	], 
+	STAKING_CONTRACT_ADDRESS
 )
