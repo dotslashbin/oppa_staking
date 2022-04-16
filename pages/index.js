@@ -56,10 +56,14 @@ export default function Home() {
       })
 
       OPPAStaking.methods.GetStakes().call({ from: account }).then(output => {
-        setHasStake(true)
         if(output.user == account) {
+          setHasStake(true)
           setStakedAmount(output.amount)
         }
+
+        setHasStake(false)
+
+
       })
     }
 
