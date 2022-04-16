@@ -398,7 +398,20 @@ export const OPPAStaking = new web3Provider.eth.Contract(
 		},
 		{
 			"inputs": [],
-			"name": "GetStake",
+			"name": "GetStakeHolderCount",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "GetStakes",
 			"outputs": [
 				{
 					"components": [
@@ -408,44 +421,19 @@ export const OPPAStaking = new web3Provider.eth.Contract(
 							"type": "address"
 						},
 						{
-							"components": [
-								{
-									"internalType": "address",
-									"name": "user",
-									"type": "address"
-								},
-								{
-									"internalType": "uint256",
-									"name": "amount",
-									"type": "uint256"
-								},
-								{
-									"internalType": "uint256",
-									"name": "since",
-									"type": "uint256"
-								}
-							],
-							"internalType": "struct OPPA_staking.Stake[]",
-							"name": "address_stakes",
-							"type": "tuple[]"
+							"internalType": "uint256",
+							"name": "amount",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "since",
+							"type": "uint256"
 						}
 					],
-					"internalType": "struct OPPA_staking.Stakeholder",
+					"internalType": "struct OPPA_staking.Stake[]",
 					"name": "",
-					"type": "tuple"
-				}
-			],
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [],
-			"name": "GetStakeHolderCount",
-			"outputs": [
-				{
-					"internalType": "uint256",
-					"name": "",
-					"type": "uint256"
+					"type": "tuple[]"
 				}
 			],
 			"stateMutability": "view",
