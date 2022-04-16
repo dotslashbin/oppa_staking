@@ -28,6 +28,7 @@ export default function Home() {
 
   const [ balance, setBalance ] = useState('')
   const [ hasStake, setHasStake ] = useState(false)
+  const [ stakedAmount, setStakedAmount ] = useState('')
   const [ activeDashboard, setActiveDashboard ] = useState(STAKE_HARVEST_DASHBOARD)
 
   async function connect() {
@@ -55,7 +56,8 @@ export default function Home() {
       })
 
       OPPAStaking.methods.GetStakes().call({ from: account }).then(output => {
-        console.log(output)
+        setHasStake(true)
+        setStakedAmount(output.amount)
       })
     }
 
@@ -73,8 +75,8 @@ export default function Home() {
     if(hasStake) {
       return(
         <>
-          <Summary balance={ balance } />
-          <HarvestForm balance={ balance } unstake={ unstake }/>
+          <Summary balance={ balance } stakedAmount={ stakedAmount }  />
+          <HarvestForm balance={ balance } unstake={ unstake } stakedAmount = { stakedAmount } />
         </>
       )
     } else {
