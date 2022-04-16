@@ -431,9 +431,9 @@ export const OPPAStaking = new web3Provider.eth.Contract(
 							"type": "uint256"
 						}
 					],
-					"internalType": "struct OPPA_staking.Stake[]",
+					"internalType": "struct OPPA_staking.Stake",
 					"name": "",
-					"type": "tuple[]"
+					"type": "tuple"
 				}
 			],
 			"stateMutability": "view",

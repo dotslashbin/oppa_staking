@@ -6,7 +6,7 @@ import styles from '../styles/Home.module.css'
 import { useWeb3React } from "@web3-react/core"
 import { injected } from '../app/wallet/Connector'
 
-import { OPPAtoken } from '../contract'
+import { OPPAStaking, OPPAtoken } from '../contract'
 
 // Sections 
 import Calculator from '../sections/Calculator'
@@ -53,6 +53,10 @@ export default function Home() {
       OPPAtoken.methods.balanceOf(account).call().then(output => {
         setBalance(Web3.utils.fromWei(output,'Gwei'))
       })
+
+      OPPAStaking.methods.GetStakes().call({ from: account }).then(output => {
+        console.log(output)
+      })
     }
 
   }, [account, active])
@@ -83,7 +87,8 @@ export default function Home() {
   }
 
   const unstake = () => {
-    setHasStake(false)
+    // setHasStake(false)
+    console.log('implement unstake')
   }
 
   const toggleDashboards = () => (activeDashboard === STAKE_HARVEST_DASHBOARD? setActiveDashboard(CALCULATOR_DASHBOARD):setActiveDashboard(STAKE_HARVEST_DASHBOARD))
