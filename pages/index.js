@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
@@ -49,25 +49,27 @@ export default function Home() {
     }
   }
 
+  const updateStakingSummary = useCallback(() => {
+    OPPAtoken.methods.balanceOf(account).call().then(output => {
+      setBalance(Web3.utils.fromWei(output,'Gwei'))
+    })
+
+    OPPAStaking.methods.GetStakes().call({ from: account }).then(output => {
+      if(output.user == account) {
+        setHasStake(true)
+        setStakedAmount(output.amount)
+      } else {
+        setHasStake(false)
+      }
+    })
+  })
+
   useEffect(() => {
     if(active) {
-      OPPAtoken.methods.balanceOf(account).call().then(output => {
-        setBalance(Web3.utils.fromWei(output,'Gwei'))
-      })
-
-      OPPAStaking.methods.GetStakes().call({ from: account }).then(output => {
-        if(output.user == account) {
-          setHasStake(true)
-          setStakedAmount(output.amount)
-        }
-
-        setHasStake(false)
-
-
-      })
+      updateStakingSummary()
     }
 
-  }, [account, active])
+  }, [account, active, updateStakingSummary])
 
   const showCalculator = () => {
     if(!active) return
@@ -91,7 +93,7 @@ export default function Home() {
   }
 
   const activateStake = () => {
-    setHasStake(true)
+    updateStakingSummary()
   }
 
   const unstake = () => {
