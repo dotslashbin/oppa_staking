@@ -27,7 +27,7 @@ function Summary(props) {
 				Rewards collected: <span className={ styles.highlightedText } >0</span>
 			</div>
 			<div>
-				You will be getting: <span className={ styles.highlightedText }>123321</span> in <Countdown date={ Date.now() + 15000000 } renderer={ renderer } />
+				You will be getting: <span className={ styles.highlightedText }>(WIP)</span> in <Countdown date={ Date.now() + 15000000 } renderer={ renderer } />
 			</div>
 		</div>
 	)
