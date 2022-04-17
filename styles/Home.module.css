@@ -43,6 +43,10 @@
   padding: 2px;
 }
 
+.errorMessage {
+  color: red;
+}
+
 .fieldMessage {
   font-style: italic;
   font-size: smaller;
