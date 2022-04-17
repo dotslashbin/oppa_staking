@@ -18,8 +18,9 @@ function StakeForm(props) {
 	const [ transferHash, setTransferHash ] = useState('')
 	const [ stakingHash, setStakingHash] = useState('')
 	const [ isLoading, setIsLoading ] = useState(false)
+	const [ hideStake, setHideStake ] = useState(false)
 
-	const { account, balance } = props
+	const { account, activateStake, balance } = props
 
 	const handleChange = (event) => {
 		if (event.target.validity.valid) {
@@ -29,7 +30,7 @@ function StakeForm(props) {
 
 	const useMaxBalance = () => {
 		const allowablePercentage = GetAllowedStakablePercentage()
-		const maxValue = GetPercentageFromValue(allowablePercentage, parseFloat(props.balance))
+		const maxValue = GetPercentageFromValue(allowablePercentage, parseFloat(balance))
 		setStakedAmount(maxValue.toString())
 		setFieldMessage('You can only use 90% of your balance')
 	}
@@ -46,6 +47,7 @@ function StakeForm(props) {
 		OPPAtoken.methods.approve(account, stakedAmount).send({ from: account }).then(() => {
 			setIsApproved(true)
 			setMessage('progress 1/3')
+			setHideStake(true)
 			OPPAtoken.methods.transferFrom(account, STAKING_CONTRACT_ADDRESS, stakedAmount).send({ from: account }).then(tokenTransfer => {
 					console.log('DEBUG ...', 'transferFrom', tokenTransfer)
 					setTransferHash(tokenTransfer.blockHash)
@@ -56,6 +58,8 @@ function StakeForm(props) {
 						setStakedAmount('')
 						setMessage('Complete! 3/3')
 						setIsLoading(false)
+						setHideStake(false)
+						activateStake()
 					})
 				})
 		})
@@ -69,7 +73,7 @@ function StakeForm(props) {
 			</div>
 			<br />
 			<div>
-				OPPA balance: <span className={ styles.highlightedText }>{ props.balance }</span>
+				OPPA balance: <span className={ styles.highlightedText }>{ balance }</span>
 			</div>
 			<div className={ styles.inputContainer }>
 				<label>Amount to stake</label>
@@ -83,14 +87,16 @@ function StakeForm(props) {
 					<a className={ styles.clickable_link } href='#' onClick={ useMaxBalance }>Use max</a>
 				</div>
 			</div>
-	
-			<div className={ styles.dashboardActivityButtons }>
+
+			{ hideStake? (<></>): (
+				<div className={ styles.dashboardActivityButtons }>
 				<button onClick={() => { stake() } }>Stake</button>
 				<a className={ styles.clickable_link } href='#' onClick={() => { resetFields() }} >Reset</a>
 			</div>
+			) }
 		
 			<div>
-				<div>{ isLoading? 'Validating transactions':'' }</div>
+				<div>{ isLoading? 'Validating transactions ...':'' }</div>
 				<div>{ message }</div>
 			</div>
 		</div>
