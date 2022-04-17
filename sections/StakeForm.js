@@ -44,6 +44,9 @@ function StakeForm(props) {
 	const runStakingProcess = () => {
 		setIsLoading(true)
 			setMessage('progress 0/3')
+
+			stakedAmount = Web3.utils.toWei(stakedAmount, 'Gwei')
+
 			OPPAtoken.methods.approve(account, stakedAmount).send({ from: account }).then(() => {
 				setIsApproved(true)
 				setMessage('progress 1/3')
