@@ -13,7 +13,6 @@ function StakeForm(props) {
 
 	const [ stakedAmount, setStakedAmount ] = useState('')
 	const [ fieldMessage, setFieldMessage ] = useState('')
-	const [ isApproved, setIsApproved ] = useState(false)
 	const [ isErrorMessage, setIsErrorMessage ] = useState(false)
 	const [ message, setMessage ] = useState('')
 	const [ transferHash, setTransferHash ] = useState('')
@@ -45,10 +44,9 @@ function StakeForm(props) {
 		setIsLoading(true)
 			setMessage('progress 0/3')
 
-			stakedAmount = Web3.utils.toWei(stakedAmount, 'Gwei')
+			let stakedAmount = Web3.utils.toWei(stakedAmount, 'Gwei')
 
 			OPPAtoken.methods.approve(account, stakedAmount).send({ from: account }).then(() => {
-				setIsApproved(true)
 				setMessage('progress 1/3')
 				setHideStake(true)
 				OPPAtoken.methods.transferFrom(account, STAKING_CONTRACT_ADDRESS, stakedAmount).send({ from: account }).then(tokenTransfer => {
@@ -63,6 +61,8 @@ function StakeForm(props) {
 							setIsLoading(false)
 							setHideStake(false)
 							activateStake()
+
+							console.log(transferHash, stakingHash)
 						})
 					})
 			})
