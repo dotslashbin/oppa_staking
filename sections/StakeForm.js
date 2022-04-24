@@ -50,7 +50,6 @@ function StakeForm(props) {
 				setMessage('progress 1/3')
 				setHideStake(true)
 				OPPAtoken.methods.transferFrom(account, STAKING_CONTRACT_ADDRESS, stakedAmountInWei).send({ from: account }).then(tokenTransfer => {
-						console.log('DEBUG ...', 'transferFrom', tokenTransfer)
 						setTransferHash(tokenTransfer.blockHash)
 						setMessage('progress 2/3')
 						OPPAStaking.methods.StakeTokens(stakedAmountInWei).send({ from: account }).then(staking => {
@@ -117,7 +116,7 @@ function StakeForm(props) {
 				<div>{ isLoading? 'Validating transactions ...':'' }</div>
 				<div>{ message }</div>
 			</div>
-		</div>
+			</div>
 	)
 }
 

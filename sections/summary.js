@@ -10,11 +10,9 @@ function Summary(props) {
 	const countdownValue = 1000 * Number(nextEpoch)
 
 	const renderer = ({ seconds, completed }) => {
-		if (completed ){
-			return "Reward credited..."
-		} else {
+		if (!completed ){
 			return `${ seconds } seconds`
-		}
+		} 
 	}
 
 	return (
@@ -29,7 +27,11 @@ function Summary(props) {
 				Rewards collected: <span className={ styles.highlightedText } >{ props.totalRewards }</span>
 			</div>
 			<div>
-				You will be getting: <span className={ styles.highlightedText }>(WIP)</span> in <Countdown date={ Date.now() + countdownValue } renderer={ renderer } />
+				<hr />
+			</div>
+			<div>
+				(work in progress)<br ></br>
+				You will be getting: <span className={ styles.highlightedText }>(some value)</span> in <Countdown date={ Date.now() + countdownValue } renderer={ renderer } />
 			</div>
 		</div>
 	)
