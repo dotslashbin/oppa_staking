@@ -26,10 +26,12 @@ export default function Home() {
   // const { active, account, library, connector, activate, deactivate } = useWeb3React()
   const { active, account, activate, deactivate } = useWeb3React()
 
+  const [ activeDashboard, setActiveDashboard ] = useState(STAKE_HARVEST_DASHBOARD)
   const [ balance, setBalance ] = useState('')
   const [ hasStake, setHasStake ] = useState(false)
+  const [ nextEpoch, setNextEpoch ] = useState(0)
   const [ stakedAmount, setStakedAmount ] = useState('')
-  const [ activeDashboard, setActiveDashboard ] = useState(STAKE_HARVEST_DASHBOARD)
+  const [ totalRewards, setTotalRewards ] = useState('')
 
   async function connect() {
     try {
@@ -55,13 +57,22 @@ export default function Home() {
     })
 
     OPPAStaking.methods.GetStakes().call({ from: account }).then(output => {
-      if(output.user == account) {
+      if(output.holder == account) { //This means that a staking record was found
         setHasStake(true)
-        setStakedAmount(output.amount)
+        setStakedAmount(Web3.utils.fromWei(output.amount, 'Gwei'))
+
+
       } else {
         setHasStake(false)
       }
     })
+
+    if(hasStake)  {
+      OPPAStaking.methods.GetStakeSummary().call({ from: account }).then(output => {
+        setNextEpoch(output.remainingSeconds)
+        setTotalRewards(Web3.utils.fromWei(output.total_rewards, 'Gwei'))
+      })
+    }
   })
 
   useEffect(() => {
@@ -83,7 +94,7 @@ export default function Home() {
     if(hasStake) {
       return(
         <>
-          <Summary balance={ balance } stakedAmount={ stakedAmount }  />
+          <Summary balance={ balance } stakedAmount={ stakedAmount } nextEpoch={ nextEpoch } totalRewards={ totalRewards } />
           <HarvestForm balance={ balance } unstake={ unstake } stakedAmount = { stakedAmount } />
         </>
       )
@@ -97,8 +108,10 @@ export default function Home() {
   }
 
   const unstake = () => {
-    // setHasStake(false)
-    console.log('implement unstake')
+    OPPAStaking.methods.UnstakeTokens().send({ from: account }).then(unstaking => {
+      console.log('DEBUG ...', unstaking)
+      setHasStake(false)
+    })
   }
 
   const toggleDashboards = () => (activeDashboard === STAKE_HARVEST_DASHBOARD? setActiveDashboard(CALCULATOR_DASHBOARD):setActiveDashboard(STAKE_HARVEST_DASHBOARD))
