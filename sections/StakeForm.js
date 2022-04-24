@@ -79,9 +79,9 @@ function StakeForm(props) {
 		}
 	}
 
-	const getFieldMessage = () => {
-		return fieldMessage? (<span className={ isErrorMessage? styles.errorMessage : styles.fieldMessage } >{ fieldMessage }</span>):null 
-	}
+	const getErrorMessage = () => isErrorMessage? styles.errorMessage : styles.fieldMessage
+
+	const getFieldMessage = () => fieldMessage? (<span className={ getErrorMessage() } >{ fieldMessage }</span>):null 
 	
 	return (
 		<div className={ styles.summary }>
