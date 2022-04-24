@@ -44,16 +44,16 @@ function StakeForm(props) {
 		setIsLoading(true)
 			setMessage('progress 0/3')
 
-			let stakedAmount = Web3.utils.toWei(stakedAmount, 'Gwei')
+			let stakedAmountInWei = Web3.utils.toWei(stakedAmount, 'Gwei')
 
-			OPPAtoken.methods.approve(account, stakedAmount).send({ from: account }).then(() => {
+			OPPAtoken.methods.approve(account, stakedAmountInWei).send({ from: account }).then(() => {
 				setMessage('progress 1/3')
 				setHideStake(true)
-				OPPAtoken.methods.transferFrom(account, STAKING_CONTRACT_ADDRESS, stakedAmount).send({ from: account }).then(tokenTransfer => {
+				OPPAtoken.methods.transferFrom(account, STAKING_CONTRACT_ADDRESS, stakedAmountInWei).send({ from: account }).then(tokenTransfer => {
 						console.log('DEBUG ...', 'transferFrom', tokenTransfer)
 						setTransferHash(tokenTransfer.blockHash)
 						setMessage('progress 2/3')
-						OPPAStaking.methods.StakeTokens(stakedAmount).send({ from: account }).then(staking => {
+						OPPAStaking.methods.StakeTokens(stakedAmountInWei).send({ from: account }).then(staking => {
 							setStakingHash( staking.blockHash )
 							setMessage(`Staking Complete!`)
 							setStakedAmount('')
@@ -78,6 +78,10 @@ function StakeForm(props) {
 			runStakingProcess()
 		}
 	}
+
+	const getFieldMessage = () => {
+		return fieldMessage? (<span className={ isErrorMessage? styles.errorMessage : styles.fieldMessage } >{ fieldMessage }</span>):null 
+	}
 	
 	return (
 		<div className={ styles.summary }>
@@ -95,7 +99,7 @@ function StakeForm(props) {
 					<div>
 						<input type='text' value={ stakedAmount } onChange={ handleChange } pattern="[0-9.]*"/>
 						<div className={ styles.fieldMessageContianer }>
-						{ fieldMessage? (<span className={ isErrorMessage? styles.errorMessage : styles.fieldMessage } >{ fieldMessage }</span>):null }
+						{ getFieldMessage() }
 						</div>
 					</div>
 					<a className={ styles.clickable_link } href='#' onClick={ useMaxBalance }>Use max</a>
