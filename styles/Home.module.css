@@ -1,3 +1,7 @@
+.clickable_link {
+  color: #FBD21C;
+}
+
 .container { 
   background-color: #1D1671;
   display: flex;
@@ -11,10 +15,73 @@
   text-align: center;
 }
 
+.dashboardActivityButtons {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
 .dashboardTop {
   display: flex;
   justify-content: space-between;
   width: 90%;
+}
+
+.epochOptions {
+  display: flex;
+}
+
+.epochOptions span {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.epochOption{
+  border: 1px solid white;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 2px;
+}
+
+.errorMessage {
+  color: red;
+}
+
+.fieldMessage {
+  font-style: italic;
+  font-size: smaller;
+}
+
+.formInput {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.formInput input {
+  width: 60%;
+  border: none;
+}
+
+.formInput input.smaller {
+  width: 10%;
+}
+
+.highlightedText {
+  color: #FD72C0
+}
+
+.instructions {
+  color: #fff;
+}
+
+.inputContainer {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.label_white {
+  color: #ffffff;
 }
 
 .main {
@@ -38,70 +105,11 @@
   margin-bottom: 10px
 }
 
-.dashboardActivityButtons {
-  margin-top: 10px;
-  display: flex;
-  justify-content: space-between;
-}
-
 .topNavBar {
   background-color: #052D85;
   display: flex;
   justify-content: space-between;
   height: 40px;
-}
-
-.inputContainer {
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.fieldMessage {
-  font-style: italic;
-  font-size: smaller;
-}
-
-.formInput {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.formInput input {
-  width: 60%;
-  border: none;
-}
-
-.formInput input.smaller {
-  width: 10%;
-}
-
-.epochOptions {
-  display: flex;
-}
-
-.epochOptions span {
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-.epochOption{
-  border: 1px solid white;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.3);
-  padding: 2px;
-}
-
-.label_white {
-  color: #ffffff;
-}
-
-.highlightedText {
-  color: #FD72C0
-}
-
-.clickable_link {
-  color: #FBD21C;
 }
 
 .topMenu {

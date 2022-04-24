@@ -5,6 +5,8 @@ import Countdown from 'react-countdown'
 
 function Summary(props) {
 
+	const { stakedAmount } = props
+
 	const renderer = ({ minutes, seconds, completed }) => {
 		if (completed ){
 			return "Reward credited..."
@@ -19,13 +21,13 @@ function Summary(props) {
 				OPPA: <span className={ styles.highlightedText }>{ props.balance }</span>
 			</div>
 			<div>
-				Your current staking delgation: <span className={ styles.highlightedText } >1,000,000,000</span>
+				Your current staking delgation: <span className={ styles.highlightedText } >{ stakedAmount }</span>
 			</div>
 			<div>
-				Rewards collected: <span className={ styles.highlightedText } >1,234,456</span>
+				Rewards collected: <span className={ styles.highlightedText } >0</span>
 			</div>
 			<div>
-				You will be getting: <span className={ styles.highlightedText }>123321</span> in <Countdown date={ Date.now() + 15000000 } renderer={ renderer } />
+				You will be getting: <span className={ styles.highlightedText }>(WIP)</span> in <Countdown date={ Date.now() + 15000000 } renderer={ renderer } />
 			</div>
 		</div>
 	)

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
@@ -6,7 +6,7 @@ import styles from '../styles/Home.module.css'
 import { useWeb3React } from "@web3-react/core"
 import { injected } from '../app/wallet/Connector'
 
-import { OPPAtoken } from '../contract'
+import { OPPAStaking, OPPAtoken } from '../contract'
 
 // Sections 
 import Calculator from '../sections/Calculator'
@@ -28,6 +28,7 @@ export default function Home() {
 
   const [ balance, setBalance ] = useState('')
   const [ hasStake, setHasStake ] = useState(false)
+  const [ stakedAmount, setStakedAmount ] = useState('')
   const [ activeDashboard, setActiveDashboard ] = useState(STAKE_HARVEST_DASHBOARD)
 
   async function connect() {
@@ -48,14 +49,27 @@ export default function Home() {
     }
   }
 
+  const updateStakingSummary = useCallback(() => {
+    OPPAtoken.methods.balanceOf(account).call().then(output => {
+      setBalance(Web3.utils.fromWei(output,'Gwei'))
+    })
+
+    OPPAStaking.methods.GetStakes().call({ from: account }).then(output => {
+      if(output.user == account) {
+        setHasStake(true)
+        setStakedAmount(output.amount)
+      } else {
+        setHasStake(false)
+      }
+    })
+  })
+
   useEffect(() => {
     if(active) {
-      OPPAtoken.methods.balanceOf(account).call().then(output => {
-        setBalance(Web3.utils.fromWei(output,'Gwei'))
-      })
+      updateStakingSummary()
     }
 
-  }, [account, active])
+  }, [account, active, updateStakingSummary])
 
   const showCalculator = () => {
     if(!active) return
@@ -69,21 +83,22 @@ export default function Home() {
     if(hasStake) {
       return(
         <>
-          <Summary balance={ balance } />
-          <HarvestForm balance={ balance } unstake={ unstake }/>
+          <Summary balance={ balance } stakedAmount={ stakedAmount }  />
+          <HarvestForm balance={ balance } unstake={ unstake } stakedAmount = { stakedAmount } />
         </>
       )
     } else {
-      return (<StakeForm balance={ balance } activateStake={ activateStake } /> )
+      return (<StakeForm balance={ balance } activateStake={ activateStake } account={ account } /> )
     }
   }
 
   const activateStake = () => {
-    setHasStake(true)
+    updateStakingSummary()
   }
 
   const unstake = () => {
-    setHasStake(false)
+    // setHasStake(false)
+    console.log('implement unstake')
   }
 
   const toggleDashboards = () => (activeDashboard === STAKE_HARVEST_DASHBOARD? setActiveDashboard(CALCULATOR_DASHBOARD):setActiveDashboard(STAKE_HARVEST_DASHBOARD))
