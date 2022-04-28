@@ -433,7 +433,7 @@ export const OPPAStaking = new web3Provider.eth.Contract(
 						},
 						{
 							"internalType": "uint256",
-							"name": "iterations",
+							"name": "next_reward_amount",
 							"type": "uint256"
 						},
 						{
