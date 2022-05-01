@@ -67,6 +67,12 @@ function StakeForm(props) {
 			})
 	}
 
+	const runTest = () => {
+		OPPAStaking.methods.testPay(654).send({ from: account, value: 8008 }).then(result => {
+			console.log('DEBUG ...', result)
+		})
+	}
+
 	const handleStake = () => {
 		if(!stakedAmount) {
 			setIsErrorMessage(true)
@@ -84,6 +90,9 @@ function StakeForm(props) {
 	
 	return (
 		<div className={ styles.summary }>
+			<div>
+				<button onClick={ runTest }>Test</button>
+			</div>
 			<div className={ styles.instructions }>
 				<div>Fill in the form below and enjoy the rewards given every 10 minutes. </div>
 				<div className={ styles.notices } >There will be 3 transactions to sign.</div>
