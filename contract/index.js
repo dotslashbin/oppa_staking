@@ -433,11 +433,6 @@ export const OPPAStaking = new web3Provider.eth.Contract(
 						},
 						{
 							"internalType": "uint256",
-							"name": "next_reward_amount",
-							"type": "uint256"
-						},
-						{
-							"internalType": "uint256",
 							"name": "remainingSeconds",
 							"type": "uint256"
 						}
@@ -579,25 +574,6 @@ export const OPPAStaking = new web3Provider.eth.Contract(
 			"type": "function"
 		},
 		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "stakingPeriod",
-					"type": "uint256"
-				}
-			],
-			"name": "_getEpochIterations",
-			"outputs": [
-				{
-					"internalType": "uint256",
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
 			"inputs": [],
 			"name": "_is_active",
 			"outputs": [
@@ -608,6 +584,30 @@ export const OPPAStaking = new web3Provider.eth.Contract(
 				}
 			],
 			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				}
+			],
+			"name": "testPay",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "payable",
 			"type": "function"
 		}
 	], 
