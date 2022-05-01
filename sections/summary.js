@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from '../styles/Home.module.css'
 import Countdown from 'react-countdown'
+import { REWARD_PERCENTAGE } from '../config'
 
 
 function Summary(props) {
@@ -14,6 +15,8 @@ function Summary(props) {
 			return `${ seconds } seconds`
 		} 
 	}
+
+	const getRewardPercentage = (amount) => ((REWARD_PERCENTAGE / 100)*amount).toFixed(2)
 
 	return (
 		<div className={ styles.summary }>
@@ -30,8 +33,7 @@ function Summary(props) {
 				<hr />
 			</div>
 			<div>
-				(work in progress)<br ></br>
-				You will be getting: <span className={ styles.highlightedText }>{ nextReward }</span> in <Countdown date={ Date.now() + countdownValue } renderer={ renderer } />
+				NEXT reward: <span className={ styles.highlightedText }>{ getRewardPercentage( props.balance ) } or { REWARD_PERCENTAGE }%</span> in <Countdown date={ Date.now() + countdownValue } renderer={ renderer } />
 			</div>
 		</div>
 	)
