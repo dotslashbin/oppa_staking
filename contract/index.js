@@ -327,6 +327,31 @@ export const OPPAStaking = new web3Provider.eth.Contract(
 			"type": "event"
 		},
 		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "value",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "address",
+					"name": "sender",
+					"type": "address"
+				}
+			],
+			"name": "Test",
+			"type": "event"
+		},
+		{
 			"inputs": [],
 			"name": "CleanStakes",
 			"outputs": [
@@ -597,14 +622,26 @@ export const OPPAStaking = new web3Provider.eth.Contract(
 			"name": "testPay",
 			"outputs": [
 				{
-					"internalType": "uint256",
+					"components": [
+						{
+							"internalType": "uint256",
+							"name": "token",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "bnb",
+							"type": "uint256"
+						},
+						{
+							"internalType": "address",
+							"name": "bnbee",
+							"type": "address"
+						}
+					],
+					"internalType": "struct OPPA_staking.TestOutput",
 					"name": "",
-					"type": "uint256"
-				},
-				{
-					"internalType": "uint256",
-					"name": "",
-					"type": "uint256"
+					"type": "tuple"
 				}
 			],
 			"stateMutability": "payable",
