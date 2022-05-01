@@ -30,6 +30,7 @@ export default function Home() {
   const [ balance, setBalance ] = useState('')
   const [ hasStake, setHasStake ] = useState(false)
   const [ nextEpoch, setNextEpoch ] = useState(0)
+  const [ nextReward, setNextReward ] = useState('')
   const [ stakedAmount, setStakedAmount ] = useState('')
   const [ totalRewards, setTotalRewards ] = useState('')
 
@@ -60,17 +61,21 @@ export default function Home() {
       if(output.holder == account) { //This means that a staking record was found
         setHasStake(true)
         setStakedAmount(Web3.utils.fromWei(output.amount, 'Gwei'))
-
-
       } else {
         setHasStake(false)
       }
+    }).catch(error => {
+      console.log('No stakes found...')
     })
 
     if(hasStake)  {
       OPPAStaking.methods.GetStakeSummary().call({ from: account }).then(output => {
+        console.log('DEBUG ....', output)
         setNextEpoch(output.remainingSeconds)
-        setTotalRewards(Web3.utils.fromWei(output.total_rewards, 'Gwei'))
+        setNextReward('TEST')  
+        setTotalRewards(Web3.utils.fromWei(output.total_rewards, 'Gwei').toString())
+      }).then(error => {
+        console.log('No Staking summary found,,,')
       })
     }
   })
@@ -94,7 +99,7 @@ export default function Home() {
     if(hasStake) {
       return(
         <>
-          <Summary balance={ balance } stakedAmount={ stakedAmount } nextEpoch={ nextEpoch } totalRewards={ totalRewards } />
+          <Summary balance={ balance } stakedAmount={ stakedAmount } nextEpoch={ nextEpoch } nextReward={ nextReward } totalRewards={ totalRewards } />
           <HarvestForm balance={ balance } unstake={ unstake } stakedAmount = { stakedAmount } />
         </>
       )

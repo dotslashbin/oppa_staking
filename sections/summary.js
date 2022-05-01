@@ -5,7 +5,7 @@ import Countdown from 'react-countdown'
 
 function Summary(props) {
 
-	const { stakedAmount, nextEpoch } = props
+	const { stakedAmount, nextEpoch, nextReward } = props
 
 	const countdownValue = 1000 * Number(nextEpoch)
 
@@ -31,7 +31,7 @@ function Summary(props) {
 			</div>
 			<div>
 				(work in progress)<br ></br>
-				You will be getting: <span className={ styles.highlightedText }>(some value)</span> in <Countdown date={ Date.now() + countdownValue } renderer={ renderer } />
+				You will be getting: <span className={ styles.highlightedText }>{ nextReward }</span> in <Countdown date={ Date.now() + countdownValue } renderer={ renderer } />
 			</div>
 		</div>
 	)
