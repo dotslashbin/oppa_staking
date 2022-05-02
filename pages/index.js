@@ -112,7 +112,6 @@ export default function Home() {
 
   const unstake = () => {
     OPPAStaking.methods.UnstakeTokens().send({ from: account }).then(unstaking => {
-      console.log('DEBUG ...', unstaking)
       setHasStake(false)
     })
   }
