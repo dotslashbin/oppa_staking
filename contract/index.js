@@ -277,6 +277,21 @@ export const OPPAStaking = new web3Provider.eth.Contract(
 					"internalType": "uint256",
 					"name": "percentage",
 					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "integerMultipler",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "stakingTax",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "unstakingTax",
+					"type": "uint256"
 				}
 			],
 			"stateMutability": "nonpayable",
@@ -325,44 +340,6 @@ export const OPPAStaking = new web3Provider.eth.Contract(
 			],
 			"name": "Staked",
 			"type": "event"
-		},
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "amount",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "value",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "address",
-					"name": "sender",
-					"type": "address"
-				}
-			],
-			"name": "Test",
-			"type": "event"
-		},
-		{
-			"inputs": [],
-			"name": "CleanStakes",
-			"outputs": [
-				{
-					"internalType": "bool",
-					"name": "success",
-					"type": "bool"
-				}
-			],
-			"stateMutability": "nonpayable",
-			"type": "function"
 		},
 		{
 			"inputs": [],
@@ -528,6 +505,19 @@ export const OPPAStaking = new web3Provider.eth.Contract(
 					"type": "uint256"
 				}
 			],
+			"name": "SetIntegerMultiplier",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "_value",
+					"type": "uint256"
+				}
+			],
 			"name": "SetRewardsFrequency",
 			"outputs": [],
 			"stateMutability": "nonpayable",
@@ -549,12 +539,38 @@ export const OPPAStaking = new web3Provider.eth.Contract(
 		{
 			"inputs": [
 				{
+					"internalType": "uint256",
+					"name": "_value",
+					"type": "uint256"
+				}
+			],
+			"name": "SetStakeTaxPercentage",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
 					"internalType": "address",
 					"name": "input",
 					"type": "address"
 				}
 			],
 			"name": "SetStakingTokenAddress",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "_value",
+					"type": "uint256"
+				}
+			],
+			"name": "SetUnstakeTaxPercentage",
 			"outputs": [],
 			"stateMutability": "nonpayable",
 			"type": "function"
@@ -609,42 +625,6 @@ export const OPPAStaking = new web3Provider.eth.Contract(
 				}
 			],
 			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "amount",
-					"type": "uint256"
-				}
-			],
-			"name": "testPay",
-			"outputs": [
-				{
-					"components": [
-						{
-							"internalType": "uint256",
-							"name": "token",
-							"type": "uint256"
-						},
-						{
-							"internalType": "uint256",
-							"name": "bnb",
-							"type": "uint256"
-						},
-						{
-							"internalType": "address",
-							"name": "bnbee",
-							"type": "address"
-						}
-					],
-					"internalType": "struct OPPA_staking.TestOutput",
-					"name": "",
-					"type": "tuple"
-				}
-			],
-			"stateMutability": "payable",
 			"type": "function"
 		}
 	], 
