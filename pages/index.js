@@ -70,9 +70,7 @@ export default function Home() {
 
     if(hasStake)  {
       OPPAStaking.methods.GetStakeSummary().call({ from: account }).then(output => {
-        console.log('DEBUG ....', output)
         setNextEpoch(output.remainingSeconds)
-        setNextReward('TEST')  
         setTotalRewards(Web3.utils.fromWei(output.total_rewards, 'Gwei').toString())
       }).then(error => {
         console.log('No Staking summary found,,,')

@@ -24,10 +24,10 @@ function Summary(props) {
 				OPPA: <span className={ styles.highlightedText }>{ props.balance }</span>
 			</div>
 			<div>
-				Your current staking delgation: <span className={ styles.highlightedText } >{ stakedAmount }</span>
+				You currently have <span className={ styles.highlightedText } >{ stakedAmount }</span> on stake.
 			</div>
 			<div>
-				Rewards collected: <span className={ styles.highlightedText } >{ props.totalRewards }</span>
+				Rewards accumulated: <span className={ styles.highlightedText } >{ props.totalRewards }</span>
 			</div>
 			<div>
 				<hr />
