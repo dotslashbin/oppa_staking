@@ -435,7 +435,7 @@ export const OPPAStaking = new web3Provider.eth.Contract(
 						},
 						{
 							"internalType": "uint256",
-							"name": "remainingSeconds",
+							"name": "start_time",
 							"type": "uint256"
 						}
 					],
