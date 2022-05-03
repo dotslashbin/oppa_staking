@@ -6,6 +6,10 @@ import styles from '../styles/Home.module.css'
 import { useWeb3React } from "@web3-react/core"
 import { injected } from '../app/wallet/Connector'
 
+// Utils
+import { GetTimeTillNextEpoch } from '../app/utils'
+
+// Contract
 import { OPPAStaking, OPPAtoken } from '../contract'
 
 // Sections 
@@ -29,9 +33,9 @@ export default function Home() {
   const [ activeDashboard, setActiveDashboard ] = useState(STAKE_HARVEST_DASHBOARD)
   const [ balance, setBalance ] = useState('')
   const [ hasStake, setHasStake ] = useState(false)
-  const [ nextEpoch, setNextEpoch ] = useState(0)
   const [ nextReward, setNextReward ] = useState('')
   const [ stakedAmount, setStakedAmount ] = useState('')
+  const [ startTime, setStartTime ] = useState(0)
   const [ totalRewards, setTotalRewards ] = useState('')
 
   async function connect() {
@@ -70,11 +74,9 @@ export default function Home() {
 
     if(hasStake)  {
       OPPAStaking.methods.GetStakeSummary().call({ from: account }).then(output => {
-        setNextEpoch(output.remainingSeconds)
+        setStartTime(output.start_time)
         setTotalRewards(Web3.utils.fromWei(output.total_rewards, 'Gwei').toString())
-      }).then(error => {
-        console.log('No Staking summary found,,,')
-      })
+      }).catch(error => console.log('DEBUG ...', 'staking summary error: ',error))
     }
   })
 
@@ -97,7 +99,7 @@ export default function Home() {
     if(hasStake) {
       return(
         <>
-          <Summary balance={ balance } stakedAmount={ stakedAmount } nextEpoch={ nextEpoch } nextReward={ nextReward } totalRewards={ totalRewards } />
+          <Summary balance={ balance } stakedAmount={ stakedAmount } startTime={ startTime } totalRewards={ totalRewards } />
           <HarvestForm balance={ balance } unstake={ unstake } stakedAmount = { stakedAmount } />
         </>
       )

@@ -3,16 +3,22 @@ import styles from '../styles/Home.module.css'
 import Countdown from 'react-countdown'
 import { REWARD_PERCENTAGE } from '../config'
 
+// Utils
+import { GetTimeTillNextEpoch } from '../app/utils'
+
 
 function Summary(props) {
 
-	const { stakedAmount, nextEpoch, nextReward } = props
+	const { stakedAmount, startTime, nextReward } = props
 
-	const countdownValue = 1000 * Number(nextEpoch)
+	// TODO: test this
+	const timeTillNextEpoch = GetTimeTillNextEpoch(2, startTime)
 
-	const renderer = ({ seconds, completed }) => {
+	let countdownValue = 1000 * Number(Math.abs(timeTillNextEpoch))
+
+	const renderer = ({ minutes, seconds, completed }) => {
 		if (!completed ){
-			return `${ seconds } seconds`
+			return `${ minutes} minutes and ${ seconds } seconds`
 		} 
 	}
 
@@ -33,7 +39,8 @@ function Summary(props) {
 				<hr />
 			</div>
 			<div>
-				NEXT reward: <span className={ styles.highlightedText }>{ getRewardPercentage( props.balance ) } or { REWARD_PERCENTAGE }%</span> in <Countdown date={ Date.now() + countdownValue } renderer={ renderer } />
+			NEXT reward: <span className={ styles.highlightedText }>{ getRewardPercentage( props.balance ) } or { REWARD_PERCENTAGE }%</span>
+			{/* NEXT reward: <span className={ styles.highlightedText }>{ getRewardPercentage( props.balance ) } or { REWARD_PERCENTAGE }%</span> in <Countdown date={ Date.now() + countdownValue } renderer={ renderer } /> */}
 			</div>
 		</div>
 	)
