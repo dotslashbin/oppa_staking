@@ -85,7 +85,7 @@ function StakeForm(props) {
 	return (
 		<div className={ styles.summary }>
 			<div className={ styles.instructions }>
-				<div>Fill in the form below and enjoy the rewards given every 10 minutes. </div>
+				<div>Fill in the form below and enjoy the rewards given every 15 minutes. </div>
 				<div className={ styles.notices } >There will be 3 transactions to sign.</div>
 			</div>
 			<br />
