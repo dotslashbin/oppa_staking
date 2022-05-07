@@ -56,7 +56,7 @@ function Summary(props) {
 				<hr />
 			</div>
 			<div>
-			NEXT reward: <span className={ styles.highlightedText }>{ getRewardPercentage( props.balance ) } or { REWARD_PERCENTAGE }%</span> 
+			You are rewarded <span className={ styles.highlightedText }>{ REWARD_PERCENTAGE }%</span> every <span className={ styles.highlightedText }>{ frequency }</span> minute(s)
 			</div>
 		</div>
 	)
