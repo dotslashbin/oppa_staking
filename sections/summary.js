@@ -7,23 +7,14 @@ import moment from 'moment'
 
 function Summary(props) {
 
-	const { stakedAmount, startTime, nextReward } = props
+	const { stakedAmount, startTime } = props
 	const [ differenceInSeconds, setDifferenceInSeconds ] = useState(0)
-	const [ timeTillNextEpoch, setTimeTillNextEpoch ] = useState(0)
 
 	useEffect(() => {
 		const startingMoment = moment.unix(startTime)
 		const currentMoment = moment(new Date())
 		setDifferenceInSeconds(currentMoment.diff(startingMoment, 'seconds'))
 	}, [])
-
-	let countdownValue = 1000 * Number(differenceInSeconds)
-
-	const renderer = ({ minutes, seconds, completed }) => {
-		if (!completed ){
-			return `${ minutes} minutes and ${ seconds } seconds`
-		} 
-	}
 
 	const getRewardPercentage = (amount) => ((REWARD_PERCENTAGE / 100)*amount).toFixed(2)
 
