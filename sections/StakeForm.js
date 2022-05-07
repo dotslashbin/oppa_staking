@@ -87,6 +87,8 @@ function StakeForm(props) {
 		}
 	}
 
+	const getStakingButton = () => hideStakingButton? (<></>):(<button onClick={() => { handleStake() } }>Stake</button>)
+
 	const getErrorMessage = () => isErrorMessage? styles.errorMessage : styles.fieldMessage
 
 	const getFieldMessage = () => fieldMessage? (<span className={ getErrorMessage() } >{ fieldMessage }</span>):null 
@@ -116,7 +118,7 @@ function StakeForm(props) {
 
 			{ hideStake? (<></>): (
 				<div className={ styles.dashboardActivityButtons }>
-				{ hideStakingButton? (<></>):(<button onClick={() => { handleStake() } }>Stake</button>)}
+				{ getStakingButton() }
 				<a className={ styles.clickable_link } href='#' onClick={() => { resetFields() }} >Reset</a>
 			</div>
 			) }

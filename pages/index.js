@@ -6,9 +6,6 @@ import styles from '../styles/Home.module.css'
 import { useWeb3React } from "@web3-react/core"
 import { injected } from '../app/wallet/Connector'
 
-// Utils
-import { GetTimeTillNextEpoch } from '../app/utils'
-
 // Contract
 import { OPPAStaking, OPPAtoken } from '../contract'
 
@@ -33,7 +30,6 @@ export default function Home() {
   const [ activeDashboard, setActiveDashboard ] = useState(STAKE_HARVEST_DASHBOARD)
   const [ balance, setBalance ] = useState('')
   const [ hasStake, setHasStake ] = useState(false)
-  const [ nextReward, setNextReward ] = useState('')
   const [ stakedAmount, setStakedAmount ] = useState('')
   const [ startTime, setStartTime ] = useState(0)
   const [ totalRewards, setTotalRewards ] = useState('')
@@ -69,7 +65,7 @@ export default function Home() {
         setHasStake(false)
       }
     }).catch(error => {
-      console.log('No stakes found...')
+      console.log('No stakes found...', error)
     })
 
     if(hasStake)  {
@@ -113,7 +109,7 @@ export default function Home() {
   }
 
   const unstake = () => {
-    OPPAStaking.methods.UnstakeTokens().send({ from: account }).then(unstaking => {
+    OPPAStaking.methods.UnstakeTokens().send({ from: account }).then(_unstaking => {
       setHasStake(false)
     })
   }
