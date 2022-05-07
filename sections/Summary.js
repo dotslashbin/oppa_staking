@@ -32,10 +32,8 @@ function Summary(props) {
 		const differenceInMinutes = difference / 60
 		
 		if(differenceInMinutes > frequency) {
-			console.log('TOGGLE NA ...')
 			enableHarvest(true)
 		} else {
-			console.log('NOPE MOT FOUND')
 			enableHarvest(false)
 		}
 
