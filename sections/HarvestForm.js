@@ -13,7 +13,7 @@ function HarvestForm(props) {
 	return (
 		<div className={ styles.control }>
 			<div>
-				{ showHarvest? (<button onClick={ handleHarvest }>Harvest rewards</button>): (<p>Your tokens coming your way! please wait ...</p>) }
+				{ showHarvest? (<button onClick={ handleHarvest }>Harvest rewards</button>): (<div className={ styles.instructions }>Harvesting ...</div>) }
 				<div>
 					<span className={ styles.notices } >Harvesting rewards will undelegate ALL of your tokens</span>
 				</div>
