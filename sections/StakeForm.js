@@ -19,6 +19,7 @@ function StakeForm(props) {
 	const [ stakingHash, setStakingHash] = useState('')
 	const [ isLoading, setIsLoading ] = useState(false)
 	const [ hideStake, setHideStake ] = useState(false)
+	const [ hideStakingButton, setHideStakingButton ] = useState(false)
 
 	const { account, activateStake, balance } = props
 
@@ -31,13 +32,21 @@ function StakeForm(props) {
 	const useMaxBalance = () => {
 		const allowablePercentage = GetAllowedStakablePercentage()
 		const maxValue = GetPercentageFromValue(allowablePercentage, parseFloat(balance))
-		setStakedAmount(maxValue.toString())
-		setFieldMessage('You can only use 90% of your balance')
+
+		if(maxValue > 0) {
+			setStakedAmount(maxValue.toString())	
+			setFieldMessage('You can only use 90% of your balance')
+		} else {
+			setHideStakingButton(true)
+			setFieldMessage('Your balance is too low for staking.')
+		}
 	}
 
 	const resetFields = () => {
 		setStakedAmount('')
 		setFieldMessage('')
+		setHideStakingButton(false)
+		setHideStake(false)
 	}
 
 	const runStakingProcess = () => {
@@ -107,7 +116,7 @@ function StakeForm(props) {
 
 			{ hideStake? (<></>): (
 				<div className={ styles.dashboardActivityButtons }>
-				<button onClick={() => { handleStake() } }>Stake</button>
+				{ hideStakingButton? (<></>):(<button onClick={() => { handleStake() } }>Stake</button>)}
 				<a className={ styles.clickable_link } href='#' onClick={() => { resetFields() }} >Reset</a>
 			</div>
 			) }

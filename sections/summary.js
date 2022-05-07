@@ -1,20 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
-import Countdown from 'react-countdown'
 import { REWARD_PERCENTAGE } from '../config'
+import moment from 'moment'
 
 // Utils
-import { GetTimeTillNextEpoch } from '../app/utils'
-
 
 function Summary(props) {
 
 	const { stakedAmount, startTime, nextReward } = props
+	const [ differenceInSeconds, setDifferenceInSeconds ] = useState(0)
+	const [ timeTillNextEpoch, setTimeTillNextEpoch ] = useState(0)
 
-	// TODO: test this
-	const timeTillNextEpoch = GetTimeTillNextEpoch(2, startTime)
+	useEffect(() => {
+		const startingMoment = moment.unix(startTime)
+		const currentMoment = moment(new Date())
+		setDifferenceInSeconds(currentMoment.diff(startingMoment, 'seconds'))
+	}, [])
 
-	let countdownValue = 1000 * Number(Math.abs(timeTillNextEpoch))
+	let countdownValue = 1000 * Number(differenceInSeconds)
 
 	const renderer = ({ minutes, seconds, completed }) => {
 		if (!completed ){
