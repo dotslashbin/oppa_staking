@@ -6,7 +6,6 @@ import moment from 'moment'
 // Contract
 import { OPPAStaking } from '../contract'
 
-
 function Summary(props) {
 
 	const { enableHarvest, stakedAmount, startTime } = props
@@ -15,6 +14,7 @@ function Summary(props) {
 	const [ rewardsPercentage, setRewardsPercentage ] = useState(0)
 	const [ integerMultiplier, setIntegerMultiplier ] = useState(0)
 	const [ frequency, setFrequency ] = useState(0)
+	const [ remainingTime, setRemainingTime ] = useState(0)
 
 	const hasEochElapsed = (difference) => difference > frequency
 
@@ -37,12 +37,6 @@ function Summary(props) {
 			enableHarvest(false)
 		}
 
-		const remaining = (difference / 60) % frequency
-
-		// console.log('DEBUG ...', startingMoment.format("Y-M-D h:mm:ss a"), currentMoment.format("Y-M-D h:mm:ss a"), difference, difference / 60, remaining)
-
-
-
 	}, [startTime])
 
 	const getRewardPercentage = (amount) => ((REWARD_PERCENTAGE / 100)*amount).toFixed(2)
@@ -62,8 +56,7 @@ function Summary(props) {
 				<hr />
 			</div>
 			<div>
-			NEXT reward: <span className={ styles.highlightedText }>{ getRewardPercentage( props.balance ) } or { REWARD_PERCENTAGE }%</span>
-			{/* NEXT reward: <span className={ styles.highlightedText }>{ getRewardPercentage( props.balance ) } or { REWARD_PERCENTAGE }%</span> in <Countdown date={ Date.now() + countdownValue } renderer={ renderer } /> */}
+			NEXT reward: <span className={ styles.highlightedText }>{ getRewardPercentage( props.balance ) } or { REWARD_PERCENTAGE }%</span> 
 			</div>
 		</div>
 	)
