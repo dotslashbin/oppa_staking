@@ -16,3 +16,8 @@ export function GetPercentageFromValue(percentage, totalValue) {
 	const amontToSubtract =  (100 * percentage) / totalValue;
 	return (totalValue - amontToSubtract)
 }
+
+export function GetTimeTillNextEpoch(frequency, differenceInSeconds) {
+	const accumulated = (60*frequency)
+	return differenceInSeconds%accumulated
+}

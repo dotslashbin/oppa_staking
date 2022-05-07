@@ -19,6 +19,7 @@ function StakeForm(props) {
 	const [ stakingHash, setStakingHash] = useState('')
 	const [ isLoading, setIsLoading ] = useState(false)
 	const [ hideStake, setHideStake ] = useState(false)
+	const [ hideStakingButton, setHideStakingButton ] = useState(false)
 
 	const { account, activateStake, balance } = props
 
@@ -31,13 +32,21 @@ function StakeForm(props) {
 	const useMaxBalance = () => {
 		const allowablePercentage = GetAllowedStakablePercentage()
 		const maxValue = GetPercentageFromValue(allowablePercentage, parseFloat(balance))
-		setStakedAmount(maxValue.toString())
-		setFieldMessage('You can only use 90% of your balance')
+
+		if(maxValue > 0) {
+			setStakedAmount(maxValue.toString())	
+			setFieldMessage('You can only use 90% of your balance')
+		} else {
+			setHideStakingButton(true)
+			setFieldMessage('Your balance is too low for staking.')
+		}
 	}
 
 	const resetFields = () => {
 		setStakedAmount('')
 		setFieldMessage('')
+		setHideStakingButton(false)
+		setHideStake(false)
 	}
 
 	const runStakingProcess = () => {
@@ -78,6 +87,8 @@ function StakeForm(props) {
 		}
 	}
 
+	const getStakingButton = () => hideStakingButton? (<></>):(<button onClick={() => { handleStake() } }>Stake</button>)
+
 	const getErrorMessage = () => isErrorMessage? styles.errorMessage : styles.fieldMessage
 
 	const getFieldMessage = () => fieldMessage? (<span className={ getErrorMessage() } >{ fieldMessage }</span>):null 
@@ -85,7 +96,7 @@ function StakeForm(props) {
 	return (
 		<div className={ styles.summary }>
 			<div className={ styles.instructions }>
-				<div>Fill in the form below and enjoy the rewards given every 10 minutes. </div>
+				<div>Fill in the form below and enjoy the rewards given every 15 minutes. </div>
 				<div className={ styles.notices } >There will be 3 transactions to sign.</div>
 			</div>
 			<br />
@@ -107,7 +118,7 @@ function StakeForm(props) {
 
 			{ hideStake? (<></>): (
 				<div className={ styles.dashboardActivityButtons }>
-				<button onClick={() => { handleStake() } }>Stake</button>
+				{ getStakingButton() }
 				<a className={ styles.clickable_link } href='#' onClick={() => { resetFields() }} >Reset</a>
 			</div>
 			) }

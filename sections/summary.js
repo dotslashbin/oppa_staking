@@ -1,19 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
-import Countdown from 'react-countdown'
+import { REWARD_PERCENTAGE } from '../config'
+import moment from 'moment'
 
+// Utils
 
 function Summary(props) {
 
-	const { stakedAmount, nextEpoch } = props
+	const { stakedAmount, startTime } = props
+	const [ differenceInSeconds, setDifferenceInSeconds ] = useState(0)
 
-	const countdownValue = 1000 * Number(nextEpoch)
+	useEffect(() => {
+		const startingMoment = moment.unix(startTime)
+		const currentMoment = moment(new Date())
+		setDifferenceInSeconds(currentMoment.diff(startingMoment, 'seconds'))
 
-	const renderer = ({ seconds, completed }) => {
-		if (!completed ){
-			return `${ seconds } seconds`
-		} 
-	}
+		console.log('DEBUG ..', 'time passed...', differenceInSeconds)
+	}, [])
+
+	const getRewardPercentage = (amount) => ((REWARD_PERCENTAGE / 100)*amount).toFixed(2)
 
 	return (
 		<div className={ styles.summary }>
@@ -21,17 +26,17 @@ function Summary(props) {
 				OPPA: <span className={ styles.highlightedText }>{ props.balance }</span>
 			</div>
 			<div>
-				Your current staking delgation: <span className={ styles.highlightedText } >{ stakedAmount }</span>
+				You currently have <span className={ styles.highlightedText } >{ stakedAmount }</span> on stake.
 			</div>
 			<div>
-				Rewards collected: <span className={ styles.highlightedText } >{ props.totalRewards }</span>
+				Rewards accumulated: <span className={ styles.highlightedText } >{ props.totalRewards }</span>
 			</div>
 			<div>
 				<hr />
 			</div>
 			<div>
-				(work in progress)<br ></br>
-				You will be getting: <span className={ styles.highlightedText }>(some value)</span> in <Countdown date={ Date.now() + countdownValue } renderer={ renderer } />
+			NEXT reward: <span className={ styles.highlightedText }>{ getRewardPercentage( props.balance ) } or { REWARD_PERCENTAGE }%</span>
+			{/* NEXT reward: <span className={ styles.highlightedText }>{ getRewardPercentage( props.balance ) } or { REWARD_PERCENTAGE }%</span> in <Countdown date={ Date.now() + countdownValue } renderer={ renderer } /> */}
 			</div>
 		</div>
 	)

@@ -6,6 +6,7 @@ import styles from '../styles/Home.module.css'
 import { useWeb3React } from "@web3-react/core"
 import { injected } from '../app/wallet/Connector'
 
+// Contract
 import { OPPAStaking, OPPAtoken } from '../contract'
 
 // Sections 
@@ -29,8 +30,8 @@ export default function Home() {
   const [ activeDashboard, setActiveDashboard ] = useState(STAKE_HARVEST_DASHBOARD)
   const [ balance, setBalance ] = useState('')
   const [ hasStake, setHasStake ] = useState(false)
-  const [ nextEpoch, setNextEpoch ] = useState(0)
   const [ stakedAmount, setStakedAmount ] = useState('')
+  const [ startTime, setStartTime ] = useState(0)
   const [ totalRewards, setTotalRewards ] = useState('')
 
   async function connect() {
@@ -60,18 +61,18 @@ export default function Home() {
       if(output.holder == account) { //This means that a staking record was found
         setHasStake(true)
         setStakedAmount(Web3.utils.fromWei(output.amount, 'Gwei'))
-
-
       } else {
         setHasStake(false)
       }
+    }).catch(error => {
+      console.log('No stakes found...', error)
     })
 
     if(hasStake)  {
       OPPAStaking.methods.GetStakeSummary().call({ from: account }).then(output => {
-        setNextEpoch(output.remainingSeconds)
-        setTotalRewards(Web3.utils.fromWei(output.total_rewards, 'Gwei'))
-      })
+        setStartTime(output.start_time)
+        setTotalRewards(Web3.utils.fromWei(output.total_rewards, 'Gwei').toString())
+      }).catch(error => console.log('DEBUG ...', 'staking summary error: ',error))
     }
   })
 
@@ -94,7 +95,7 @@ export default function Home() {
     if(hasStake) {
       return(
         <>
-          <Summary balance={ balance } stakedAmount={ stakedAmount } nextEpoch={ nextEpoch } totalRewards={ totalRewards } />
+          <Summary balance={ balance } stakedAmount={ stakedAmount } startTime={ startTime } totalRewards={ totalRewards } />
           <HarvestForm balance={ balance } unstake={ unstake } stakedAmount = { stakedAmount } />
         </>
       )
@@ -108,8 +109,7 @@ export default function Home() {
   }
 
   const unstake = () => {
-    OPPAStaking.methods.UnstakeTokens().send({ from: account }).then(unstaking => {
-      console.log('DEBUG ...', unstaking)
+    OPPAStaking.methods.UnstakeTokens().send({ from: account }).then(_unstaking => {
       setHasStake(false)
     })
   }
