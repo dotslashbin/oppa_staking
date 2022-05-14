@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
+
+import { OPPAStaking } from '../contract'
 
 import { GetAllowedStakablePercentage, GetEpochValues, GetPercentageFromValue } from '../app/utils'
 
@@ -13,7 +15,7 @@ function Calculator(props)  {
 	const [ projectionInput, setProjectionInput ] = useState('')
 	const [ activeEpoch, setActiveEpoh ] = useState('Year')
 	const [ finalBalance, setFinalBalance ] = useState('')
-	
+	const [ rewardsPercentage, setRewardsPercentage ] = useState('')
 
 	const generate = (baseValue) => {
 		// const container = []
@@ -28,7 +30,7 @@ function Calculator(props)  {
 			if(i === 1) {
 				endingBalance = baseValue
 			}
-			const valueToAdd = (endingBalance/100)*(REWARD_PERCENTAGE)
+			const valueToAdd = (endingBalance/100)*(rewardsPercentage/1000)
 			// container.push(valueToAdd)
 			endingBalance += valueToAdd
 		}
@@ -59,6 +61,10 @@ function Calculator(props)  {
 		const allowableStakeAmount = GetPercentageFromValue(GetAllowedStakablePercentage(), props.balance)
 		setBaseBalance(allowableStakeAmount)
 	}
+
+	useEffect(() => {
+		OPPAStaking.methods.GetRewardsPercentagePerEpoch().call().then(result => setRewardsPercentage(Number(result))).catch(error => console.log('ERROR in fetching rewars percentage ...', error))
+	}, [])
 
 	return(
 		<div className={ styles.summary }>
