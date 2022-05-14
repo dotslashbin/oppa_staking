@@ -93,7 +93,10 @@ function Calculator(props)  {
 				Resulting Balance: { finalBalance }
 			</div>
 			<div>
-				Total Earnings: { finalBalance - baseBalance }
+				{ finalBalance > 0 ? (<>
+					Total Earnings: { finalBalance - baseBalance }
+					</>):(<></>)}
+				
 			</div>
 
 			<div className={ styles.dashboardActivityButtons }>
