@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
 import Web3 from 'web3'
 
@@ -20,6 +20,7 @@ function StakeForm(props) {
 	const [ isLoading, setIsLoading ] = useState(false)
 	const [ hideStake, setHideStake ] = useState(false)
 	const [ hideStakingButton, setHideStakingButton ] = useState(false)
+	const [ rewardsFrequencyInMinutes, setRewardsFrequencyInMinutes ] = useState(0)
 
 	const { account, activateStake, balance } = props
 
@@ -92,11 +93,19 @@ function StakeForm(props) {
 	const getErrorMessage = () => isErrorMessage? styles.errorMessage : styles.fieldMessage
 
 	const getFieldMessage = () => fieldMessage? (<span className={ getErrorMessage() } >{ fieldMessage }</span>):null 
+
+	useEffect(() => {
+		OPPAStaking.methods.GetRewardsFrequencyInMinutes().call().then(result => {
+			setRewardsFrequencyInMinutes(result)
+		}).catch(error => {
+			console.log('ERROR fetching rewards frequency ...', error)
+		})
+	},[])
 	
 	return (
 		<div className={ styles.summary }>
 			<div className={ styles.instructions }>
-				<div>Fill in the form below and enjoy the rewards given every 15 minutes. </div>
+				<div>Fill in the form below and enjoy the rewards given every { rewardsFrequencyInMinutes } minutes. </div>
 				<div className={ styles.notices } >There will be 3 transactions to sign.</div>
 			</div>
 			<br />

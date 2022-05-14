@@ -15,7 +15,7 @@ import HarvestForm from '../sections/HarvestForm'
 import TopMenu from '../sections/TopMenu'
 import FooterMenu from '../sections/FooterMenu'
 import WalletIndicator from '../sections/WalletIndicator'
-import Summary from '../sections/summary'
+import Summary from '../sections/Summary'
 import StakeForm from '../sections/StakeForm'
 import Web3 from 'web3'
 
@@ -33,6 +33,8 @@ export default function Home() {
   const [ stakedAmount, setStakedAmount ] = useState('')
   const [ startTime, setStartTime ] = useState(0)
   const [ totalRewards, setTotalRewards ] = useState('')
+  const [ enableHarvest, setEnableHarvest ] = useState(false)
+  const [ frequency, setFrequency ] = useState(0)
 
   async function connect() {
     try {
@@ -83,6 +85,10 @@ export default function Home() {
 
   }, [account, active, updateStakingSummary])
 
+  useEffect(() => {
+    OPPAStaking.methods.GetRewardsFrequencyInMinutes().call().then(result => setFrequency(result)).catch(error => console.log('ERROR fetching frequency in minutes', error))
+  }, [])
+
   const showCalculator = () => {
     if(!active) return
 
@@ -95,8 +101,8 @@ export default function Home() {
     if(hasStake) {
       return(
         <>
-          <Summary balance={ balance } stakedAmount={ stakedAmount } startTime={ startTime } totalRewards={ totalRewards } />
-          <HarvestForm balance={ balance } unstake={ unstake } stakedAmount = { stakedAmount } />
+          <Summary balance={ balance } stakedAmount={ stakedAmount } startTime={ startTime } totalRewards={ totalRewards } enableHarvest={ setEnableHarvest } />
+          { enableHarvest? (<HarvestForm balance={ balance } unstake={ unstake } stakedAmount = { stakedAmount } />): <p>You can only harvest after the first { frequency } minute(s) </p>}
         </>
       )
     } else {
@@ -127,6 +133,8 @@ export default function Home() {
 
     return (<></>)
   }
+
+  const toggleHarvestbutton = (value) => setEnableHarvest(value)
 
   return (
     <div className={styles.container}>
