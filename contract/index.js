@@ -411,6 +411,19 @@ export const OPPAStaking = new web3Provider.eth.Contract(
 		},
 		{
 			"inputs": [],
+			"name": "GetIntegerMultiplier",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
 			"name": "GetRewardsFrequencyInMinutes",
 			"outputs": [
 				{
