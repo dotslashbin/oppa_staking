@@ -24,8 +24,6 @@ function Summary(props) {
 		const startingMoment = moment.unix(startTime)
 		const currentMoment = moment(new Date())
 
-		const difference = currentMoment.diff(startingMoment, 'seconds')
-
 	}, [startTime])
 
 	const getRewardPercentage = (amount) => ((REWARD_PERCENTAGE / 100)*amount).toFixed(2)

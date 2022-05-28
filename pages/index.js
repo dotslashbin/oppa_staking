@@ -82,7 +82,7 @@ export default function Home() {
         OPPAStaking.methods.GetIntegerMultiplier().call({ from: account}).then(multiplier=> {
           const rewards = Web3.utils.fromWei(output.total_rewards, 'Gwei')
           setTotalRewards((rewards / multiplier).toString())
-        }).catch(error => console.log('DEBUG ...', 'Problem fetching the integer multiplier', erro))
+        }).catch(_error => console.log('DEBUG ...', 'Problem fetching the integer multiplier', _error))
       }).catch(_error => console.log('DEBUG ...', 'staking summary error: ',_error))
     }
   })
