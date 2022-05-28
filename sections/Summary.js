@@ -8,7 +8,7 @@ import { OPPAStaking } from '../contract'
 
 function Summary(props) {
 
-	const { enableHarvest, frequency, stakedAmount, startTime } = props
+	const { frequency, stakedAmount, startTime } = props
 
 	const [ differenceInSeconds, setDifferenceInSeconds ] = useState(0)
 	const [ rewardsPercentage, setRewardsPercentage ] = useState(0)
