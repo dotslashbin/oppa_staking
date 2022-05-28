@@ -2,6 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
+// Utilities
+import { HasTimePassedMinimum } from '../app/utils'
+
 // Web3 tools
 import { useWeb3React } from "@web3-react/core"
 import { injected } from '../app/wallet/Connector'
@@ -28,6 +31,7 @@ export default function Home() {
   const { active, account, activate, deactivate } = useWeb3React()
 
   const [ activeDashboard, setActiveDashboard ] = useState(STAKE_HARVEST_DASHBOARD)
+  const [ differenceFromStart, setDifferenceFromStart ] = useState(0)
   const [ balance, setBalance ] = useState('')
   const [ hasStake, setHasStake ] = useState(false)
   const [ stakedAmount, setStakedAmount ] = useState('')
@@ -74,6 +78,8 @@ export default function Home() {
       OPPAStaking.methods.GetStakeSummary().call({ from: account }).then(output => {
         setStartTime(output.start_time)
 
+        setEnableHarvest(frequency && HasTimePassedMinimum(frequency, output.difference)? true: false)
+
         OPPAStaking.methods.GetIntegerMultiplier().call({ from: account}).then(multiplier=> {
           const rewards = Web3.utils.fromWei(output.total_rewards, 'Gwei')
           setTotalRewards((rewards / multiplier).toString())
@@ -105,7 +111,7 @@ export default function Home() {
     if(hasStake) {
       return(
         <>
-          <Summary balance={ balance } stakedAmount={ stakedAmount } startTime={ startTime } totalRewards={ totalRewards } enableHarvest={ setEnableHarvest } />
+          <Summary balance={ balance } stakedAmount={ stakedAmount } startTime={ startTime } totalRewards={ totalRewards } enableHarvest={ setEnableHarvest } frequency={ frequency }  />
           { enableHarvest? (<HarvestForm balance={ balance } unstake={ unstake } stakedAmount = { stakedAmount } />): <p>You can only harvest after the first { frequency } minute(s) </p>}
         </>
       )
@@ -137,8 +143,6 @@ export default function Home() {
 
     return (<></>)
   }
-
-  const toggleHarvestbutton = (value) => setEnableHarvest(value)
 
   return (
     <div className={styles.container}>
