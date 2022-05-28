@@ -28,9 +28,6 @@ function Summary(props) {
 
 		const difference = currentMoment.diff(startingMoment, 'seconds')
 
-		const differenceInMinutes = difference / 60
-		
-
 	}, [startTime])
 
 	const getRewardPercentage = (amount) => ((REWARD_PERCENTAGE / 100)*amount).toFixed(2)

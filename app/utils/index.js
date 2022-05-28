@@ -1,4 +1,3 @@
-import { difference } from 'lodash';
 
 export function GetEpochValues(duration) {
 	if (duration === 'Year') {
