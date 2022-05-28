@@ -31,7 +31,6 @@ export default function Home() {
   const { active, account, activate, deactivate } = useWeb3React()
 
   const [ activeDashboard, setActiveDashboard ] = useState(STAKE_HARVEST_DASHBOARD)
-  const [ differenceFromStart, setDifferenceFromStart ] = useState(0)
   const [ balance, setBalance ] = useState('')
   const [ hasStake, setHasStake ] = useState(false)
   const [ stakedAmount, setStakedAmount ] = useState('')
@@ -84,7 +83,7 @@ export default function Home() {
           const rewards = Web3.utils.fromWei(output.total_rewards, 'Gwei')
           setTotalRewards((rewards / multiplier).toString())
         }).catch(error => console.log('DEBUG ...', 'Problem fetching the integer multiplier', erro))
-      }).catch(error => console.log('DEBUG ...', 'staking summary error: ',error))
+      }).catch(_error => console.log('DEBUG ...', 'staking summary error: ',_error))
     }
   })
 
