@@ -1,3 +1,4 @@
+
 export function GetEpochValues(duration) {
 	if (duration === 'Year') {
 		return 52559
@@ -20,4 +21,10 @@ export function GetPercentageFromValue(percentage, totalValue) {
 export function GetTimeTillNextEpoch(frequency, differenceInSeconds) {
 	const accumulated = (60*frequency)
 	return differenceInSeconds%accumulated
+}
+
+export function HasTimePassedMinimum(frequency, differenceInSeconds) {
+	const differenceInMins = differenceInSeconds / 60
+
+	return differenceInMins > frequency? true:false
 }

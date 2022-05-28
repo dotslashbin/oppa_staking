@@ -2,6 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
+// Utilities
+import { HasTimePassedMinimum } from '../app/utils'
+
 // Web3 tools
 import { useWeb3React } from "@web3-react/core"
 import { injected } from '../app/wallet/Connector'
@@ -29,12 +32,13 @@ export default function Home() {
 
   const [ activeDashboard, setActiveDashboard ] = useState(STAKE_HARVEST_DASHBOARD)
   const [ balance, setBalance ] = useState('')
+  const [ timeDifference, setTimeDifference ] = useState(0)
+  const [ enableHarvest, setEnableHarvest ] = useState(false)
+  const [ frequency, setFrequency ] = useState(0)
   const [ hasStake, setHasStake ] = useState(false)
   const [ stakedAmount, setStakedAmount ] = useState('')
   const [ startTime, setStartTime ] = useState(0)
   const [ totalRewards, setTotalRewards ] = useState('')
-  const [ enableHarvest, setEnableHarvest ] = useState(false)
-  const [ frequency, setFrequency ] = useState(0)
 
   async function connect() {
     try {
@@ -73,8 +77,14 @@ export default function Home() {
     if(hasStake)  {
       OPPAStaking.methods.GetStakeSummary().call({ from: account }).then(output => {
         setStartTime(output.start_time)
-        setTotalRewards(Web3.utils.fromWei(output.total_rewards, 'Gwei').toString())
-      }).catch(error => console.log('DEBUG ...', 'staking summary error: ',error))
+
+        setEnableHarvest(frequency && HasTimePassedMinimum(frequency, output.difference)? true: false)
+
+        OPPAStaking.methods.GetIntegerMultiplier().call({ from: account}).then(multiplier=> {
+          const rewards = Web3.utils.fromWei(output.total_rewards, 'Gwei')
+          setTotalRewards((rewards / multiplier).toString())
+        }).catch(_error => console.log('DEBUG ...', 'Problem fetching the integer multiplier', _error))
+      }).catch(_error => console.log('DEBUG ...', 'staking summary error: ',_error))
     }
   })
 
@@ -87,6 +97,10 @@ export default function Home() {
 
   useEffect(() => {
     OPPAStaking.methods.GetRewardsFrequencyInMinutes().call().then(result => setFrequency(result)).catch(error => console.log('ERROR fetching frequency in minutes', error))
+
+    OPPAStaking.methods.GetStakeSummary().call({ from: account }).then(output => {
+      setTimeDifference(output.difference)
+    })
   }, [])
 
   const showCalculator = () => {
@@ -101,7 +115,7 @@ export default function Home() {
     if(hasStake) {
       return(
         <>
-          <Summary balance={ balance } stakedAmount={ stakedAmount } startTime={ startTime } totalRewards={ totalRewards } enableHarvest={ setEnableHarvest } />
+          <Summary balance={ balance } stakedAmount={ stakedAmount } startTime={ startTime } totalRewards={ totalRewards } frequency={ frequency } timeDifference={ timeDifference } />
           { enableHarvest? (<HarvestForm balance={ balance } unstake={ unstake } stakedAmount = { stakedAmount } />): <p>You can only harvest after the first { frequency } minute(s) </p>}
         </>
       )
@@ -133,8 +147,6 @@ export default function Home() {
 
     return (<></>)
   }
-
-  const toggleHarvestbutton = (value) => setEnableHarvest(value)
 
   return (
     <div className={styles.container}>

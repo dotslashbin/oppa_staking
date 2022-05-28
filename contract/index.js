@@ -469,12 +469,22 @@ export const OPPAStaking = new web3Provider.eth.Contract(
 					"components": [
 						{
 							"internalType": "uint256",
+							"name": "block_time",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
 							"name": "total_rewards",
 							"type": "uint256"
 						},
 						{
 							"internalType": "uint256",
 							"name": "start_time",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "difference",
 							"type": "uint256"
 						}
 					],
