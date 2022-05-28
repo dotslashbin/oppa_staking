@@ -33,10 +33,10 @@ function StakeForm(props) {
 	const useMaxBalance = () => {
 		const allowablePercentage = GetAllowedStakablePercentage()
 		const maxValue = GetPercentageFromValue(allowablePercentage, parseFloat(balance))
-
+	
 		if(maxValue > 0) {
-			setStakedAmount(maxValue.toString())	
 			setFieldMessage('You can only use 90% of your balance')
+			setStakedAmount(maxValue.toFixed(6).toString())	
 		} else {
 			setHideStakingButton(true)
 			setFieldMessage('Your balance is too low for staking.')
