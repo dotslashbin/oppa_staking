@@ -32,12 +32,13 @@ export default function Home() {
 
   const [ activeDashboard, setActiveDashboard ] = useState(STAKE_HARVEST_DASHBOARD)
   const [ balance, setBalance ] = useState('')
+  const [ timeDifference, setTimeDifference ] = useState(0)
+  const [ enableHarvest, setEnableHarvest ] = useState(false)
+  const [ frequency, setFrequency ] = useState(0)
   const [ hasStake, setHasStake ] = useState(false)
   const [ stakedAmount, setStakedAmount ] = useState('')
   const [ startTime, setStartTime ] = useState(0)
   const [ totalRewards, setTotalRewards ] = useState('')
-  const [ enableHarvest, setEnableHarvest ] = useState(false)
-  const [ frequency, setFrequency ] = useState(0)
 
   async function connect() {
     try {
@@ -96,6 +97,10 @@ export default function Home() {
 
   useEffect(() => {
     OPPAStaking.methods.GetRewardsFrequencyInMinutes().call().then(result => setFrequency(result)).catch(error => console.log('ERROR fetching frequency in minutes', error))
+
+    OPPAStaking.methods.GetStakeSummary().call({ from: account }).then(output => {
+      setTimeDifference(output.difference)
+    })
   }, [])
 
   const showCalculator = () => {
@@ -110,7 +115,7 @@ export default function Home() {
     if(hasStake) {
       return(
         <>
-          <Summary balance={ balance } stakedAmount={ stakedAmount } startTime={ startTime } totalRewards={ totalRewards } frequency={ frequency }  />
+          <Summary balance={ balance } stakedAmount={ stakedAmount } startTime={ startTime } totalRewards={ totalRewards } frequency={ frequency } timeDifference={ timeDifference } />
           { enableHarvest? (<HarvestForm balance={ balance } unstake={ unstake } stakedAmount = { stakedAmount } />): <p>You can only harvest after the first { frequency } minute(s) </p>}
         </>
       )
