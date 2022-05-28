@@ -8,12 +8,11 @@ import { OPPAStaking } from '../contract'
 
 function Summary(props) {
 
-	const { enableHarvest, stakedAmount, startTime } = props
+	const { enableHarvest, frequency, stakedAmount, startTime } = props
 
 	const [ differenceInSeconds, setDifferenceInSeconds ] = useState(0)
 	const [ rewardsPercentage, setRewardsPercentage ] = useState(0)
 	const [ integerMultiplier, setIntegerMultiplier ] = useState(0)
-	const [ frequency, setFrequency ] = useState(0)
 	const [ remainingTime, setRemainingTime ] = useState(0)
 
 	const hasEochElapsed = (difference) => difference > frequency
@@ -31,11 +30,6 @@ function Summary(props) {
 
 		const differenceInMinutes = difference / 60
 		
-		if(differenceInMinutes > frequency) {
-			enableHarvest(true)
-		} else {
-			enableHarvest(false)
-		}
 
 	}, [startTime])
 
