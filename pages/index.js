@@ -73,7 +73,11 @@ export default function Home() {
     if(hasStake)  {
       OPPAStaking.methods.GetStakeSummary().call({ from: account }).then(output => {
         setStartTime(output.start_time)
-        setTotalRewards(Web3.utils.fromWei(output.total_rewards, 'Gwei').toString())
+
+        OPPAStaking.methods.GetIntegerMultiplier().call({ from: account}).then(multiplier=> {
+          const rewards = Web3.utils.fromWei(output.total_rewards, 'Gwei')
+          setTotalRewards((rewards / multiplier).toString())
+        }).catch(error => console.log('DEBUG ...', 'Problem fetching the integer multiplier', erro))
       }).catch(error => console.log('DEBUG ...', 'staking summary error: ',error))
     }
   })
