@@ -97,10 +97,6 @@ export default function Home() {
 
   useEffect(() => {
     OPPAStaking.methods.GetRewardsFrequencyInMinutes().call().then(result => setFrequency(result)).catch(error => console.log('ERROR fetching frequency in minutes', error))
-
-    OPPAStaking.methods.GetStakeSummary().call({ from: account }).then(output => {
-      setTimeDifference(output.difference)
-    })
   }, [])
 
   const showCalculator = () => {
@@ -115,7 +111,7 @@ export default function Home() {
     if(hasStake) {
       return(
         <>
-          <Summary balance={ balance } stakedAmount={ stakedAmount } startTime={ startTime } totalRewards={ totalRewards } frequency={ frequency } timeDifference={ timeDifference } />
+          <Summary balance={ balance } stakedAmount={ stakedAmount } startTime={ startTime } totalRewards={ totalRewards } frequency={ frequency } account={ account } />
           { enableHarvest? (<HarvestForm balance={ balance } unstake={ unstake } stakedAmount = { stakedAmount } />): <p>You can only harvest after the first { frequency } minute(s) </p>}
         </>
       )
