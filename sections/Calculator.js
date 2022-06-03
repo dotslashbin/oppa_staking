@@ -5,8 +5,6 @@ import { OPPAStaking } from '../contract'
 
 import { GetAllowedStakablePercentage, GetEpochValues, GetPercentageFromValue } from '../app/utils'
 
-const REWARD_PERCENTAGE = 0.00005
-
 const epochPeriods = ['Day', 'Month', 'Year']
 
 function Calculator(props)  {
@@ -86,9 +84,11 @@ function Calculator(props)  {
 
 				<div className={ styles.formInput } >
 					<div>
-						<input className={ styles.smaller } type='text' value={ projectionInput } onChange={ updateProjectionInput } pattern="[0-9]*" />
+						<input type='text' value={ projectionInput } onChange={ updateProjectionInput } pattern="[0-9]*"  />
 					</div>
-					<div className={ styles.epochOptions }>
+				</div>
+				<div className={ styles.formInput }>
+				<div className={ styles.epochOptions }>
 						{ epochPeriods.map((period, key) => <span onClick={() => { setActiveEpoh(period) }} key={ key } className={ activeEpoch === period ? styles.epochOption:'' } >{ period }(s)</span>) }
 					</div>
 				</div>
