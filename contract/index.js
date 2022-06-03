@@ -270,11 +270,6 @@ export const OPPAStaking = new web3Provider.eth.Contract(
 				},
 				{
 					"internalType": "uint256",
-					"name": "frequency",
-					"type": "uint256"
-				},
-				{
-					"internalType": "uint256",
 					"name": "percentage",
 					"type": "uint256"
 				},
