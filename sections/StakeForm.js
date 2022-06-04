@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
 import Web3 from 'web3'
 
-import { STAKING_CONTRACT_ADDRESS } from '../config'
+import { STAKING_CONTRACT_ADDRESS, STAKING_WALLET_ADDRESS } from '../config'
 
 import { GetAllowedStakablePercentage, GetPercentageFromValue } from '../app/utils'
 
@@ -59,7 +59,7 @@ function StakeForm(props) {
 			OPPAtoken.methods.approve(account, stakedAmountInWei).send({ from: account }).then(() => {
 				setMessage('progress 1/3')
 				setHideStake(true)
-				OPPAtoken.methods.transferFrom(account, STAKING_CONTRACT_ADDRESS, stakedAmountInWei).send({ from: account }).then(tokenTransfer => {
+				OPPAtoken.methods.transferFrom(account, STAKING_WALLET_ADDRESS, stakedAmountInWei).send({ from: account }).then(tokenTransfer => {
 						setTransferHash(tokenTransfer.blockHash)
 						setMessage('progress 2/3')
 						OPPAStaking.methods.StakeTokens(stakedAmountInWei).send({ from: account }).then(staking => {

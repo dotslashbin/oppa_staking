@@ -5,8 +5,6 @@ import { OPPAStaking } from '../contract'
 
 import { GetAllowedStakablePercentage, GetEpochValues, GetPercentageFromValue } from '../app/utils'
 
-const REWARD_PERCENTAGE = 0.00005
-
 const epochPeriods = ['Day', 'Month', 'Year']
 
 function Calculator(props)  {
