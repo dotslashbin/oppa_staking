@@ -10,22 +10,23 @@ function Summary(props) {
 
 	const { account, frequency, stakedAmount, startTime } = props
 
-	const [ differenceInSeconds, setDifferenceInSeconds ] = useState(0)
 	const [ rewardsPercentage, setRewardsPercentage ] = useState(0)
 	const [ integerMultiplier, setIntegerMultiplier ] = useState(0)
-	const [ remainingTime, setRemainingTime ] = useState(0)
 	const [ timeDifference, setTimeDifference ] = useState(0)
 
-	console.log('DEBUG ...', timeDifference)
-
 	useEffect(() => {
-		OPPAStaking.methods.GetRewardsPercentagePerEpoch().call().then(result => setRewardsPercentage(result)).catch(error => console.log('ERROR in fetching rewars percentage ...', error))
 		OPPAStaking.methods.GetRewardsFrequencyInMinutes().call().then(result => setFrequency(result)).catch(error => console.log('ERROR fetching frequency in minutes', error))
 		OPPAStaking.methods.GetStakeSummary().call({ from: account }).then(output => setTimeDifference(output.difference * 1000)).catch(_error => console.log('Error computing for time difference', _error ))
+		OPPAStaking.methods.GetRewardsPercentagePerEpoch().call().then(result => {
+			setRewardsPercentage(result)
+			OPPAStaking.methods.GetIntegerMultiplier().call().then(result => {
+				setIntegerMultiplier(result)
+			}).catch(error => console.log('ERROR fetching integer multiplier', error))
+		}).catch(error => console.log('ERROR fetching percentage per epoch', error))
 
 	}, [startTime])
 
-	const getRewardPercentage = (amount) => ((REWARD_PERCENTAGE / 100)*amount).toFixed(2)
+	const getRewardPercentage = (rewardsPercentage / integerMultiplier)
 
 	return (
 		<div className={ styles.summary }>
@@ -45,7 +46,7 @@ function Summary(props) {
 				<hr />
 			</div>
 			<div>
-			You are rewarded <span className={ styles.highlightedText }>{ REWARD_PERCENTAGE }%</span> every <span className={ styles.highlightedText }>{ frequency }</span> minute(s)
+			You are rewarded <span className={ styles.highlightedText }>{ getRewardPercentage }%</span> every <span className={ styles.highlightedText }>{ frequency }</span> minute(s)
 			</div>
 		</div>
 	)
