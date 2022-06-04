@@ -32,7 +32,6 @@ export default function Home() {
 
   const [ activeDashboard, setActiveDashboard ] = useState(STAKE_HARVEST_DASHBOARD)
   const [ balance, setBalance ] = useState('')
-  const [ timeDifference, setTimeDifference ] = useState(0)
   const [ enableHarvest, setEnableHarvest ] = useState(false)
   const [ frequency, setFrequency ] = useState(0)
   const [ hasStake, setHasStake ] = useState(false)
