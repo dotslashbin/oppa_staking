@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
-import { REWARD_PERCENTAGE } from '../config'
 import humanizeDuration from 'humanize-duration'
 
 // Contract
