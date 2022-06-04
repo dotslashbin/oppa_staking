@@ -84,11 +84,9 @@ function Calculator(props)  {
 
 				<div className={ styles.formInput } >
 					<div>
-						<input type='text' value={ projectionInput } onChange={ updateProjectionInput } pattern="[0-9]*"  />
+						<input className={ styles.smaller } type='text' value={ projectionInput } onChange={ updateProjectionInput } pattern="[0-9]*" />
 					</div>
-				</div>
-				<div className={ styles.formInput }>
-				<div className={ styles.epochOptions }>
+					<div className={ styles.epochOptions }>
 						{ epochPeriods.map((period, key) => <span onClick={() => { setActiveEpoh(period) }} key={ key } className={ activeEpoch === period ? styles.epochOption:'' } >{ period }(s)</span>) }
 					</div>
 				</div>
