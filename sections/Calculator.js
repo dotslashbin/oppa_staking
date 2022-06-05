@@ -3,38 +3,46 @@ import styles from '../styles/Home.module.css'
 
 import { OPPAStaking } from '../contract'
 
-import { GetAllowedStakablePercentage, GetEpochValues, GetPercentageFromValue } from '../app/utils'
+import { GetAllowedStakablePercentage, GetMinutesFromTimeUnit, GetPercentageFromValue } from '../app/utils'
 
 const epochPeriods = ['Day', 'Month', 'Year']
 
 function Calculator(props)  {
 
-	const [ baseBalance, setBaseBalance ] = useState('')
-	const [ projectionInput, setProjectionInput ] = useState('')
 	const [ activeEpoch, setActiveEpoh ] = useState('Year')
-	const [ finalBalance, setFinalBalance ] = useState('')
-	const [ rewardsPercentage, setRewardsPercentage ] = useState('')
+	const [ baseBalance, setBaseBalance ] = useState('')
+	const [ frequency, setFrequency ] = useState(0)
+	const [ integerMultiplier, setIntegerMultiplier ] = useState(0)
+	const [ projectionInput, setProjectionInput ] = useState('')
+	const [ resultingBalance, setResultingBalance ] = useState('')
+	const [ rewardsPercentage, setRewardsPercentage ] = useState(0)
+	const [ totalEarnings, setTotalEarnings ] = useState('')
 
-	const generate = (baseValue) => {
-		// const container = []
-		let endingBalance = 0
-		const epochValues = GetEpochValues(activeEpoch)
+	const generate = () => {
+		const minutesFromTimeUnit = GetMinutesFromTimeUnit(activeEpoch)
 
-		if(epochValues === 0) {
+		if(minutesFromTimeUnit === 0) {
 			return
 		}
-
-		for (var i = 1; i <= (epochValues * parseInt(projectionInput)); i++) {
-			if(i === 1) {
-				endingBalance = baseValue
-			}
-			const valueToAdd = (endingBalance/100)*(rewardsPercentage/1000)
-			// container.push(valueToAdd)
-			endingBalance += valueToAdd
-		}
-
-		setFinalBalance(endingBalance.toString())
+		
+		const totalEarned = getTotalEarned(minutesFromTimeUnit)
+		setTotalEarnings(totalEarned.toString())
+		setResultingBalance(getResultingBalance(baseBalance, totalEarned).toString())
 	}
+
+	const getResultingBalance = (baseBalance, totalEarned) => Number(baseBalance) + totalEarned
+
+	const getTotalEarned = (minutesFromTimeUnit) => {
+
+		let totalEarned = 0 
+		
+		const numberOfEpochs = (parseInt(projectionInput) * minutesFromTimeUnit / frequency)
+		const percentagePerEcoh = (rewardsPercentage/100)*Number(baseBalance)
+		totalEarned = (percentagePerEcoh/integerMultiplier) * numberOfEpochs	
+
+		return totalEarned
+	}
+
 
 	const updateBaseBalance = (event) => {
 		if(event.target.validity.valid) {
@@ -50,9 +58,9 @@ function Calculator(props)  {
 
 	const resetCalculator = () => {
 		setActiveEpoh('Year')
-		setFinalBalance('')
 		setBaseBalance('')
 		setProjectionInput('')
+		setTotalEarnings('')
 	}
 
 	const autoFillBalance = () => {
@@ -61,7 +69,13 @@ function Calculator(props)  {
 	}
 
 	useEffect(() => {
-		OPPAStaking.methods.GetRewardsPercentagePerEpoch().call().then(result => setRewardsPercentage(Number(result))).catch(error => console.log('ERROR in fetching rewars percentage ...', error))
+		OPPAStaking.methods.GetRewardsFrequencyInMinutes().call().then(result => setFrequency(Number(result))).catch(error => console.log('ERROR fetching frequency in minutes', error))
+		OPPAStaking.methods.GetRewardsPercentagePerEpoch().call().then(result => {
+			setRewardsPercentage(Number(result))
+			OPPAStaking.methods.GetIntegerMultiplier().call().then(result => {
+				setIntegerMultiplier(Number(result))
+			}).catch(error => console.log('ERROR fetching integer multiplier', error))
+		}).catch(error => console.log('ERROR fetching percentage per epoch', error))
 	}, [])
 
 	return(
@@ -94,17 +108,14 @@ function Calculator(props)  {
 			</div>
 
 			<div>
-				Resulting Balance: { finalBalance }
+				Resulting Balance: { resultingBalance }
 			</div>
 			<div>
-				{ finalBalance > 0 ? (<>
-					Total Earnings: { finalBalance - baseBalance }
-					</>):(<></>)}
-				
+				Total Earnings: { totalEarnings }
 			</div>
 
 			<div className={ styles.dashboardActivityButtons }>
-				<button onClick={() => { generate( parseFloat(baseBalance) ) }}>Calculate</button>
+				<button onClick={() => { generate() }}>Calculate</button>
 				<a className={ styles.clickable_link } onClick={() => { resetCalculator() }} >Reset</a>
 			</div>
 			
