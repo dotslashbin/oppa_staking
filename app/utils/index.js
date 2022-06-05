@@ -1,11 +1,11 @@
 
-export function GetEpochValues(duration) {
+export function GetMinutesFromTimeUnit(duration) {
 	if (duration === 'Year') {
-		return 52559
+		return 525599
 	} else if(duration === 'Month') {
-		return 4380
+		return 43800
 	} else if(duration === 'Day') {
-		return 144
+		return 1440
 	}
 }
 
