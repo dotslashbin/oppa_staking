@@ -27,10 +27,10 @@ function Calculator(props)  {
 		
 		const totalEarned = getTotalEarned(minutesFromTimeUnit)
 		setTotalEarnings(totalEarned.toString())
-		setResultingBalance(getResultingBalance(baseBalance, totalEarned).toString())
+		setResultingBalance(getResultingBalance(totalEarned).toString())
 	}
 
-	const getResultingBalance = (baseBalance, totalEarned) => Number(baseBalance) + totalEarned
+	const getResultingBalance = (totalEarned) => Number(baseBalance) + totalEarned
 
 	const getTotalEarned = (minutesFromTimeUnit) => {
 
@@ -70,10 +70,10 @@ function Calculator(props)  {
 
 	useEffect(() => {
 		OPPAStaking.methods.GetRewardsFrequencyInMinutes().call().then(result => setFrequency(Number(result))).catch(error => console.log('ERROR fetching frequency in minutes', error))
-		OPPAStaking.methods.GetRewardsPercentagePerEpoch().call().then(result => {
-			setRewardsPercentage(Number(result))
-			OPPAStaking.methods.GetIntegerMultiplier().call().then(result => {
-				setIntegerMultiplier(Number(result))
+		OPPAStaking.methods.GetRewardsPercentagePerEpoch().call().then(rewards => {
+			setRewardsPercentage(Number(rewards))
+			OPPAStaking.methods.GetIntegerMultiplier().call().then(multiplier => {
+				setIntegerMultiplier(Number(multiplier))
 			}).catch(error => console.log('ERROR fetching integer multiplier', error))
 		}).catch(error => console.log('ERROR fetching percentage per epoch', error))
 	}, [])
