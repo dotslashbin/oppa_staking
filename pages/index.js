@@ -79,7 +79,7 @@ export default function Home() {
 
         setEnableHarvest(frequency && HasTimePassedMinimum(frequency, output.difference)? true: false)
 
-        OPPAStaking.methods.GetIntegerMultiplier().call({ from: account}).then(multiplier=> {
+        OPPAStaking.methods.GetIntegerMultiplier().call({ from: account}).then(_multiplier=> {
           const rewards = Web3.utils.fromWei(output.total_rewards, 'Gwei')
           setTotalRewards((rewards / multiplier).toString())
         }).catch(_error => console.log('DEBUG ...', 'Problem fetching the integer multiplier', _error))
