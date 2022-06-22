@@ -123,6 +123,12 @@
   background-color: #ffffff;
 }
 
+.versionDisplay {
+  font-size: 12px;
+  margin-top: -10px;
+  margin-left: 10px;
+}
+
 .footer a {
   display: flex;
   justify-content: center;
