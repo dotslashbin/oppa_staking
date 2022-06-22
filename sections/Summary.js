@@ -36,7 +36,7 @@ function Summary(props) {
 				You currently have <span className={ styles.highlightedText } >{ stakedAmount }</span> on stake.
 			</div>
 			<div>
-				Rewards accumulated: <span className={ styles.highlightedText } >{ props.totalRewards }</span>
+				Estimated Rewards: <span className={ styles.highlightedText } >{ props.totalRewards }</span>
 			</div>
 			<div>
 				Staking started: { humanizeDuration(timeDifference) }
