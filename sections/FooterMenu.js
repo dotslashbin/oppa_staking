@@ -4,7 +4,7 @@ import styles from '../styles/Home.module.css'
 
 const FooterMenu = () => (
 	<footer className={styles.footer}>
-		<a href='#'>click for help</a>
+		<a href='https://guides.oppatoken.com/oppa-staking/'>click for help</a>
 	</footer>
 )
 
