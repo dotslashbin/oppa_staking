@@ -1,4 +1,4 @@
-export const ALLOWABLE_STAKE_PERCENTAGE = 90 // This value is not to be converted into anything
+export const ALLOWABLE_STAKE_PERCENTAGE = 99.9 // This value is not to be converted into anything
 export const TOKEN_ADDRESS = '0xe3861027F1867F25d9B0313ee633485121ddb40B'
 export const STAKING_CONTRACT_ADDRESS = '0xe4C907e81E7a97906eD0DE7ccEB908e5fFb530ec'
 export const STAKING_WALLET_ADDRESS = '0xBbCeF904f1bc626A1aCF7d2d3Cfd8Be38C892DC0'
