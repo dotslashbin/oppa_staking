@@ -35,8 +35,8 @@ function StakeForm(props) {
 		const maxValue = GetPercentageFromValue(allowablePercentage, parseFloat(balance))
 	
 		if(maxValue > 0) {
-			setFieldMessage('You can only use 90% of your balance')
-			setStakedAmount(maxValue.toFixed(6).toString())	
+			setFieldMessage('You can only use 99.9% of your balance')
+			setStakedAmount(Math.floor(maxValue).toString())	
 		} else {
 			setHideStakingButton(true)
 			setFieldMessage('Your balance is too low for staking.')
@@ -116,7 +116,7 @@ function StakeForm(props) {
 				<label>Amount to stake</label>
 				<div className={ styles.formInput } >
 					<div>
-						<input type='text' value={ stakedAmount } onChange={ handleChange } pattern="[0-9.]*"/>
+						<input type='text' value={ stakedAmount } onChange={ handleChange } pattern="[0-9]*"/>
 						<div className={ styles.fieldMessageContianer }>
 						{ getFieldMessage() }
 						</div>
