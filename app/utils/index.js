@@ -10,11 +10,11 @@ export function GetMinutesFromTimeUnit(duration) {
 }
 
 export function GetAllowedStakablePercentage() {
-	return 90;
+	return 99.9;
 }
 
 export function GetPercentageFromValue(percentage, totalValue) {
-	const amontToSubtract =  (100 * percentage) / totalValue;
+	const amontToSubtract =  (totalValue/100)*percentage
 	return (totalValue - amontToSubtract)
 }
 
