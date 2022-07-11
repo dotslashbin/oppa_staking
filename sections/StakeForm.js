@@ -81,6 +81,9 @@ function StakeForm(props) {
 		if(!stakedAmount) {
 			setIsErrorMessage(true)
 			setFieldMessage('You need enter an amount.')
+		} else if(stakedAmount >= parseFloat(balance)) {
+			setIsErrorMessage(true)
+			setFieldMessage('Sorry, you cannot stake all of your tokens.')
 		} else {
 			setIsErrorMessage(false)
 			setFieldMessage('')
